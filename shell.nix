@@ -3,9 +3,11 @@
 with pkgs;
 
 stdenv.mkDerivation {
-  name = "comparafun-haskell";
+  name = "comparafun";
   buildInputs = [
     # Project dependencies
+
+    # Haskell
     (haskell.packages.ghc844.ghcWithPackages (
     ps: with ps; with pkgs.haskell.lib; (
       [
@@ -24,5 +26,10 @@ stdenv.mkDerivation {
     )))
     gnumake
     hasklig
+
+    # Scala
+    openjdk
+    sbt
+    scala
   ];
 }
