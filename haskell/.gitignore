@@ -1,4 +1,6 @@
-dist
+.stack-work/
+comparafun.cabal
+*~dist
 dist-*
 cabal-dev
 *.o
