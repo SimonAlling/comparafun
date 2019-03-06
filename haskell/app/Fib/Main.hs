@@ -6,6 +6,7 @@ import Text.Read (readMaybe)
 import Safe
 
 import Fib
+import Util
 
 chunkSize :: Integral a => a
 chunkSize = 32
@@ -19,7 +20,8 @@ mainWith bigNumber =
     numberOfItems = chunkSize * chunks
     integers = replicate numberOfItems bigNumber
     ints = map fromInteger integers
-  in
+  in do
+    printHECs
     defaultMain
       [ bench "fibonaccis_seq" (nf fibonaccis_seq ints)
       , bench "fibonaccis_par" (nf (fibonaccis_par chunkSize) ints)
@@ -29,7 +31,7 @@ main :: IO ()
 main =
   let
     readMaybeInt = readMaybe :: String -> Maybe Integer
-    printHelp = putStrLn "Usage: ./Main 30 fibonaccis +RTS -H1G -A100M -N2"
+    printHelp = putStrLn "Usage: stack exec -- comparafun-fib 30 fibonaccis +RTS -H1G -A100M -N2"
   in do
     maybeBigNumber <- (readMaybeInt =<<) . headMay <$> getArgs
     maybe printHelp mainWith maybeBigNumber
