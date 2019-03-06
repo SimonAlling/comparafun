@@ -4,6 +4,7 @@ with pkgs;
 
 let
   # Manticore requires version 110.81; NixOS only had 110.79.
+  # This seems to be unnecessary when using the manticore package from nixpkgs-unstable.
   newer_smlnj = (
     let
       version = "110.81";
@@ -119,9 +120,10 @@ stdenv.mkDerivation {
     scala
 
     # Manticore
-    newer_smlnj # Standard ML of New Jersey
+    # newer_smlnj # Standard ML of New Jersey
     autoconf
     gnumake
+    (import <nixpkgs-unstable> {}).manticore
     # Manticore must be installed manually.
     # http://manticore.cs.uchicago.edu/install.html
   ];
