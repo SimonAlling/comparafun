@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 readonly INT_SIZE=30
-readonly Main="stack exec comparafun-exe"
+readonly Main="stack exec -- comparafun-fib"
 readonly RTS="-H1G -A100M"
 
 set -x

@@ -28,13 +28,24 @@ library:
   source-dirs: src
 
 executables:
-  comparafun-exe:
+  comparafun-fib:
     main:                Main.hs
-    source-dirs:         app
+    source-dirs:         app/Fib
     ghc-options:
     - -threaded
     - -rtsopts
     - -O2
+    - -feager-blackholing
+    dependencies:
+    - comparafun
+  comparafun-kmeans:
+    main:                Main.hs
+    source-dirs:         app/KMeans
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -O2
+    - -feager-blackholing
     dependencies:
     - comparafun
 
