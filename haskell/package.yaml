@@ -23,6 +23,8 @@ dependencies:
 - criterion
 - safe
 - parallel
+- kmeans
+- QuickCheck
 
 library:
   source-dirs: src
