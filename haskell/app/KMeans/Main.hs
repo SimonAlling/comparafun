@@ -14,7 +14,9 @@ mainWith k =
     exampleData = concat (replicate 1000 irisData)
   in do
     printHECs
-    defaultMain []
+    defaultMain
+      [ bench "kmeans_seq" (nf (kmeans_seq k) exampleData)
+      ]
 
 main :: IO ()
 main =

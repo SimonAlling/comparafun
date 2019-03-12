@@ -10,9 +10,16 @@ import Control.Parallel.Strategies (parListChunk, rdeepseq, using)
 import Data.List (sort, minimumBy, groupBy)
 import Data.Ord (comparing)
 import Data.Function (on)
+import Test.QuickCheck (Arbitrary, Property, Gen, choose, listOf, vectorOf, arbitrary, forAll)
 import qualified Data.KMeans as KM; theirkmeans = KM.kmeans
 
-type Point = (Double, Double)
+newtype Dimensions = D Int
+  deriving (Eq, Show)
+
+instance Arbitrary Dimensions where
+  arbitrary = D <$> choose (1, 5)
+
+type Point = [Double]
 
 type Centroid = Point
 
@@ -52,22 +59,26 @@ closest :: [Point] -> Point -> Point
 closest = flip $ minimumBy . comparing . sqDistTo
 
 centroidOf :: Cluster -> Point
-centroidOf points = (x, y)
+centroidOf points = map (/ numOfPoints) sumOfPoints
   where
+    numOfPoints :: Num a => a
     numOfPoints = fromIntegral $ length points
-    x = xTotal / numOfPoints
-    y = yTotal / numOfPoints
-    xTotal = sum $ map fst $ points
-    yTotal = sum $ map snd $ points
+
+    sumOfPoints :: Point
+    sumOfPoints = foldr (zipWith (+)) (repeat 0) points
 
 -- Wasteful to calculate square root; behavior would be identical.
 sqDistTo :: Point -> Point -> Double
-sqDistTo (x1, y1) (x2, y2) = (x2-x1)^2 + (y2-y1)^2
+sqDistTo p q = sum $ zipWith (\x y -> (x-y)^2) p q
+
+genPoint :: Dimensions -> Gen Point
+genPoint (D d) = vectorOf d arbitrary
+
+genPoints :: Dimensions -> Gen [Point]
+genPoints = listOf . genPoint
 
 -- QuickCheck property
-prop_correct :: Int -> [Point] -> Bool
-prop_correct k points =
-  k <= 0 || map (map toList) (kmeans_seq k points) == theirkmeans k (map toList points)
-
-toList :: (a, a) -> [a]
-toList (x, y) = [x, y]
+prop_correct :: Dimensions -> Int -> Property
+prop_correct dimensions k = forAll (genPoints dimensions) prop
+  where
+    prop points = k <= 0 || kmeans_seq k points == theirkmeans k points
