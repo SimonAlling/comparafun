@@ -2,22 +2,21 @@
 
 module KMeans
     ( kmeans_seq
-    , prop_correct
     , theirkmeans
+    , centroidOf
+    , Point
+    , Cluster
+    , Dimensions(..)
     ) where
 
 import Control.Parallel.Strategies (parListChunk, rdeepseq, using)
 import Data.List (sort, minimumBy, groupBy)
 import Data.Ord (comparing)
 import Data.Function (on)
-import Test.QuickCheck (Arbitrary, Property, Gen, choose, listOf, vectorOf, arbitrary, forAll)
 import qualified Data.KMeans as KM; theirkmeans = KM.kmeans
 
 newtype Dimensions = D Int
   deriving (Eq, Show)
-
-instance Arbitrary Dimensions where
-  arbitrary = D <$> choose (1, 5)
 
 type Point = [Double]
 
@@ -70,15 +69,3 @@ centroidOf points = map (/ numOfPoints) sumOfPoints
 -- Wasteful to calculate square root; behavior would be identical.
 sqDistTo :: Point -> Point -> Double
 sqDistTo p q = sum $ zipWith (\x y -> (x-y)^2) p q
-
-genPoint :: Dimensions -> Gen Point
-genPoint (D d) = vectorOf d arbitrary
-
-genPoints :: Dimensions -> Gen [Point]
-genPoints = listOf . genPoint
-
--- QuickCheck property
-prop_correct :: Dimensions -> Int -> Property
-prop_correct dimensions k = forAll (genPoints dimensions) prop
-  where
-    prop points = k <= 0 || kmeans_seq k points == theirkmeans k points
