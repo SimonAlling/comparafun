@@ -6,23 +6,34 @@ import Prelude
 import Test.QuickCheck (Arbitrary, Property, Gen, choose, listOf, vectorOf, arbitrary, generate, forAll)
 import KMeans
 
-file_testData :: FilePath
-file_testData = "app/KMeans/TestData.hs"
+file_testDataForKMeans :: FilePath
+file_testDataForKMeans = "app/KMeans/KMeansTestData.hs"
+
+file_testDataForSorting :: FilePath
+file_testDataForSorting = "app/Sort/SortTestData.hs"
 
 instance Arbitrary Dimensions where
   arbitrary = D <$> choose (1, 5)
 
-generateTestData :: Dimensions -> Int ->  IO ()
-generateTestData dim n = do
-  generate (genData dim n) >>= writeFile file_testData . wrap
-  putStrLn $ "Test data written to `" ++ file_testData ++ "`."
+generateTestDataForKMeans :: Dimensions -> Int ->  IO ()
+generateTestDataForKMeans dim n = do
+  generate (genData dim n) >>= writeFile file_testDataForKMeans . wrap "KMeans"
+  printNotice file_testDataForKMeans
 
-wrap :: Show testData => testData -> String
-wrap testData = unlines $ do
-  "module TestData where"
+generateTestDataForSorting :: Int ->  IO ()
+generateTestDataForSorting n = do
+  generate (vectorOf n (arbitrary :: Gen Int)) >>= writeFile file_testDataForSorting . wrap "Sort"
+  printNotice file_testDataForSorting
+
+wrap :: Show testData => String -> testData -> String
+wrap ident testData = unlines $ do
+  "module "++ident++"TestData where"
   ""
   "testData = " ++ show testData
   [] where (>>) = (:)
+
+printNotice :: FilePath -> IO ()
+printNotice file = putStrLn $ "Test data written to `" ++ file ++ "`."
 
 genPoint :: Dimensions -> Gen Point
 genPoint (D d) = vectorOf d arbitrary
