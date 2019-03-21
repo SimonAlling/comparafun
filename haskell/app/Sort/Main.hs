@@ -4,26 +4,27 @@ import Criterion.Main (defaultMain, bench, nf)
 import System.Environment (getArgs)
 import Text.Read (readMaybe)
 import Safe
-import KMeansTestData (testData)
+import SortTestData (testData)
 
-import KMeans
+import Sort
 import Util
 
 mainWith :: Int -> IO ()
-mainWith k =
+mainWith n =
   let
-    exampleData = testData
+    items = take n $ concat $ repeat testData
   in do
     printHECs
+    putStrLn $ show $ length items
     defaultMain
-      [ bench "kmeans_seq" (nf (kmeans_seq k) exampleData)
+      [ bench "sort_par" (nf mergesort items)
       ]
 
 main :: IO ()
 main =
   let
     readMaybeInt = readMaybe :: String -> Maybe Int
-    printHelp = putStrLn "Usage: stack exec -- comparafun-kmeans 3 kmeans +RTS -H1G -A100M -N2"
+    printHelp = putStrLn "Usage: stack exec -- comparafun-sort 100000 sort +RTS -H1G -A100M -N2"
   in do
     numberOfClusters <- (readMaybeInt =<<) . headMay <$> getArgs
     maybe printHelp mainWith numberOfClusters

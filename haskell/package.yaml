@@ -25,6 +25,7 @@ dependencies:
 - parallel
 - kmeans
 - QuickCheck
+- deepseq
 
 library:
   source-dirs: src
@@ -43,6 +44,16 @@ executables:
   comparafun-kmeans:
     main:                Main.hs
     source-dirs:         app/KMeans
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -O2
+    - -feager-blackholing
+    dependencies:
+    - comparafun
+  comparafun-sort:
+    main:                Main.hs
+    source-dirs:         app/Sort
     ghc-options:
     - -threaded
     - -rtsopts
