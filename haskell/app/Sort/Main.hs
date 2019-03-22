@@ -3,6 +3,7 @@ module Main where
 import Criterion.Main (defaultMain, bench, nf)
 import System.Environment (getArgs)
 import Text.Read (readMaybe)
+import Data.List (sort)
 import Safe
 import SortTestData (testData)
 
@@ -17,7 +18,9 @@ mainWith n =
     printHECs
     putStrLn $ show $ length items
     defaultMain
-      [ bench "sort_par" (nf mergesort items)
+      [ bench "ghc_sort" (nf sort items)
+      , bench "sort_seq" (nf mergesort_seq items)
+      , bench "sort_par" (nf mergesort_par items)
       ]
 
 main :: IO ()
