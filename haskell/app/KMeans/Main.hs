@@ -5,8 +5,6 @@ import System.Environment (getArgs)
 import Text.Read (readMaybe)
 import Safe
 import KMeansTestData (testData)
-
-import KMeans
 import Util
 
 mainWith :: Int -> IO ()
@@ -16,8 +14,7 @@ mainWith k =
   in do
     printHECs
     defaultMain
-      [ bench "kmeans_seq" (nf (kmeans_seq k) exampleData)
-      ]
+      []
 
 main :: IO ()
 main =
