@@ -26,6 +26,7 @@ dependencies:
 - kmeans
 - QuickCheck
 - deepseq
+- vector
 
 library:
   source-dirs: src
