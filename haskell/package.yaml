@@ -27,6 +27,10 @@ dependencies:
 - QuickCheck
 - deepseq
 - vector
+- random
+- mtl
+- random-source
+- random-fu
 
 library:
   source-dirs: src
