@@ -4,14 +4,11 @@ import Criterion.Main (defaultMain, bench, nf)
 import System.Environment (getArgs)
 import Text.Read (readMaybe)
 import Safe
-import KMeansTestData (testData)
 import Util
 
 mainWith :: Int -> IO ()
 mainWith k =
-  let
-    exampleData = testData
-  in do
+  do
     printHECs
     defaultMain
       []

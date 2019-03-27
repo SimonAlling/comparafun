@@ -5,7 +5,6 @@ import System.Environment (getArgs)
 import Text.Read (readMaybe)
 import Data.List (sort)
 import Safe
-import SortTestData (testData)
 
 import Sort
 import Util
@@ -13,7 +12,7 @@ import Util
 mainWith :: Int -> IO ()
 mainWith n =
   let
-    items = take n $ concat $ repeat testData
+    items = []
   in do
     printHECs
     putStrLn $ show $ length items
