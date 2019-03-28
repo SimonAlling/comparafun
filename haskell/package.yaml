@@ -56,16 +56,6 @@ executables:
     - -feager-blackholing
     dependencies:
     - comparafun
-  comparafun-sort:
-    main:                Main.hs
-    source-dirs:         app/Sort
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -O2
-    - -feager-blackholing
-    dependencies:
-    - comparafun
 
 tests:
   comparafun-test:
