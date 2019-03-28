@@ -42,18 +42,32 @@ exampleData seed lohi dim n = map (Point . (flip (flip vectorFromSeed lohi) dim)
 prop_correct :: Dimensions -> Int -> Property
 prop_correct dimensions k = forAll (genPoints dimensions) (flip correctFor k)
 
-correctFor :: [Point] -> Int -> Bool
-correctFor points k = k <= 1 || length points <= k || resultSeq == resultPar
+point1, point2, point3, point4 :: Point
+point1 = Point $ V.fromList [ 1, 2, 3 ]
+point2 = Point $ V.fromList [ 1, 1, 5 ]
+point3 = Point $ V.fromList [ 5, 8, 2 ]
+point4 = Point $ V.fromList [ 5, 8, 9 ]
+
+examplePoints :: [Point]
+examplePoints = [point1, point2, point3, point4]
+
+runKmeans :: [Point] -> Int -> Vector (Vector Point)
+runKmeans points k = kmeans expectDivergent metric pointsV initial
   where
-    resultSeq =          kmeans expectDivergent metric        pointsV initial
-    resultPar = LloydPar.kmeans expectDivergent metric chunks pointsV initial
-    expectDivergent = ExpectDivergent 10
-    metric = id
-    chunks = LloydPar.Partitions 4
     pointsV :: Vector Point
     pointsV = V.fromList $ points
     initial :: Vector Cluster
-    initial = let numOfPoints = length points in
-      if numOfPoints < k
-      then error $ show numOfPoints ++ " points, but k = " ++ show k
+    initial =
+      if length points < k
+      then error $ show (length points) ++ " points, but k = " ++ show k
       else V.fromListN k $ zipWith (flip Cluster) points [1..]
+    expectDivergent :: ExpectDivergent
+    expectDivergent = ExpectDivergent 10
+    metric :: Vector Double -> Vector Double
+    metric = id
+
+correctFor :: [Point] -> Int -> Bool
+correctFor points k = or [ k <= 0, length points < k, resultA == resultB ]
+  where
+    resultA = runKmeans points k
+    resultB = runKmeans points k
