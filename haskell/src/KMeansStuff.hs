@@ -45,7 +45,7 @@ instance Metric (Vector Double) where
   distance = squareDistance
 
 squareDistance :: Num a => Vector a -> Vector a -> a
-squareDistance p q = V.sum $ V.zipWith (\x y -> (x-y)^2) p q
+squareDistance = V.sum <$$> V.zipWith ((^2) <$$> (-))
 
 genVector :: Arbitrary a => Dimensions -> Gen (Vector a)
 genVector (D d) = V.replicateM d arbitrary
