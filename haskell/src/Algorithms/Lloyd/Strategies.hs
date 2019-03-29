@@ -20,9 +20,21 @@ import Data.Vector (Vector(..), zipWith, map)
 import Data.Vector.Split (chunksOf)
 import Algorithms.Lloyd.Sequential (Cluster(..), Point(..), ExpectDivergent(..), PointSum(..), makeNewClusters, assignPS, assign)
 
+{-
+ORIGINAL CODE:
+-- We can combine two vectors of some same type $t$ provided we know how to combine two $t$s:
+instance Semigroup a => Semigroup (Vector a) where
+  (<>) = zipWith (<>)
+NOTE:
+I had to comment out the Semigroup instance because Data.Vector already had one.
+Instead I have defined (<><>) and used it where the original code used (<>).
+-}
+(<><>) :: Semigroup a => Vector a -> Vector a -> Vector a
+(<><>) = zipWith (<>)
+
 -- Step is modified to, given a partitioned list of points, perform classification in parallel:
 step :: Metric a => (Vector Double -> a) -> Vector Cluster -> Vector (Vector Point) -> Vector Cluster
-step = makeNewClusters . foldr1 (<>) . with (parTraversable rseq) ..: fmap ..: assignPS
+step = makeNewClusters . foldr1 (<><>) . with (parTraversable rseq) ..: fmap ..: assignPS
 
 with :: Strategy a -> a -> a
 with = flip using
