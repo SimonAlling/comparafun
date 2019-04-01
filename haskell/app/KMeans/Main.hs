@@ -24,6 +24,11 @@ data WhichOne = OnlySequential | OnlyParallel | Both
 
 data Batch = Batch
 
+-- These are used for parsing the output:
+benchmarkDivider, suiteDivider :: String
+benchmarkDivider = "-------- BENCHMARK"
+suiteDivider = "-------- SUITE"
+
 mainWith :: Parameters -> WhichOne -> IO ()
 mainWith params@(partitions, seed, n, k) whichOne =
   let
@@ -31,7 +36,7 @@ mainWith params@(partitions, seed, n, k) whichOne =
     dimensions = 3
     testData = generateTestData seed interval dimensions n
   in do
-    putStrLn "----------------"
+    putStrLn benchmarkDivider
     printInfo params
     defaultMain $ map snd $ filter fst $
       [ (,) (whichOne /= OnlyParallel  ) $ bench "kmeans_seq" (nf (flip (runKmeans  Seq            ) k) testData)
@@ -74,6 +79,7 @@ main =
       , "* stack exec -- comparafun-kmeans batch kmeans +RTS -H1G -A100M -N2"
       ]
   in do
+    putStrLn suiteDivider
     printCPUInfo
     printHECs
     parseArgs <$> getArgs >>= maybe printHelp (either (flip mainWith Both) $ const batch)
