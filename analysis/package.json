@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "name": "comparafun-analysis",
+  "version": "0.0.1",
+  "description": "Data analysis tools",
+  "main": "dist/index",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && tsc --module CommonJS -p .",
+    "clean": "rm -rf dist/*",
+    "prepublishOnly": "npm run build && npm test",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.1",
+    "@types/node": "^11.12.2",
+    "fmap-null-undefined": "^1.0.1",
+    "jest": "^23.5.0",
+    "ts-jest": "^23.1.4",
+    "ts-type-guards": "^0.6.1",
+    "typescript": "^3.3.4000"
+  },
+  "dependencies": {}
+}
