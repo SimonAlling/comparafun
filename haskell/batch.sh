@@ -3,7 +3,7 @@
 readonly now=$(date +"%Y-%m-%d_%H-%M")
 readonly LOG_FILE="benchmark-$now.log"
 readonly cmd="stack exec -- comparafun-kmeans batch kmeans +RTS -H1G -A100M"
-readonly collect="tee $LOG_FILE"
+readonly collect="tee -a $LOG_FILE"
 
 stack build
 
