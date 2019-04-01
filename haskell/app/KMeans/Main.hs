@@ -14,7 +14,7 @@ import Util
 import Testing (Seed, Size, K, generateTestData, runKmeans, Mode(..))
 import Algorithms.Lloyd.Sequential (Point(..))
 import Algorithms.Lloyd.Strategies (Partitions(..))
-import Configuration (Parameters, printInfo)
+import Configuration (Parameters, BenchmarkConfig(..), printInfo, printBenchmarkConfig)
 
 deriving instance Generic (Point)
 deriving instance NFData (Point)
@@ -38,14 +38,29 @@ mainWith params@(partitions, seed, n, k) whichOne =
       , (,) (whichOne /= OnlySequential) $ bench "kmeans_par" (nf (flip (runKmeans (Par partitions)) k) testData)
       ]
 
+benchmarkConfig :: BenchmarkConfig
+benchmarkConfig = BenchmarkConfig
+  { ns = [30000]
+  , ks = [3, 5, 10, 20]
+  , seeds = [1..3]
+  , parts = [20, 50, 100]
+  }
+
 batch :: IO ()
 batch =
-  with [30000] as $ \n ->
-    with [3, 5, 10, 20] as $ \k ->
-      with [1..3] as $ \seed -> do
-        mainWith (Partitions 1, seed, n, k) OnlySequential
-        with [20, 50, 100] as $ \partitions ->
-          mainWith (Partitions partitions, seed, n, k) OnlyParallel
+  let
+    theNs = ns benchmarkConfig
+    theKs = ks benchmarkConfig
+    theSeeds = seeds benchmarkConfig
+    theParts = parts benchmarkConfig
+  in do
+    printBenchmarkConfig benchmarkConfig
+    with theNs as $ \n ->
+      with theKs as $ \k ->
+        with theSeeds as $ \seed -> do
+          mainWith (Partitions 1, seed, n, k) OnlySequential
+          with theParts as $ \partitions ->
+            mainWith (Partitions partitions, seed, n, k) OnlyParallel
   where
     with = const . flip mapM_
     as = ()
