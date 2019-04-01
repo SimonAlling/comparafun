@@ -40,11 +40,11 @@ mainWith params@(partitions, seed, n, k) whichOne =
 
 batch :: IO ()
 batch =
-  with [10000, 30000] as $ \n ->
-    with [3, 5, 10, 50] as $ \k ->
+  with [30000] as $ \n ->
+    with [3, 5, 10, 20] as $ \k ->
       with [1..3] as $ \seed -> do
         mainWith (Partitions 1, seed, n, k) OnlySequential
-        with [5, 10] as $ \partitions ->
+        with [20, 50, 100] as $ \partitions ->
           mainWith (Partitions partitions, seed, n, k) OnlyParallel
   where
     with = const . flip mapM_
