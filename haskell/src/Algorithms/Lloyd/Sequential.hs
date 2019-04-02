@@ -20,7 +20,7 @@ import Data.Function (on)
 import Data.Functor.Extras ((..:),(...:))
 import Data.Metric (Metric(..))
 import Data.Semigroup (Semigroup(..))
-import Data.Vector (Vector(..), toList, fromList, create, zip, zipWith, map, empty, replicate, cons, minimumBy, length, head, forM_)
+import Data.Vector (Vector(..), toList, fromList, create, zip, zipWith, map, replicate, minimumBy, length, head, forM_)
 import qualified Data.Vector.Mutable as MV (replicate, read, write)
 
 data Point = Point
@@ -66,14 +66,15 @@ closestCluster (useMetric -> d) clusters point = fst . minimumBy (compare `on` s
   cluster <- clusters
   return (cluster, point `d` centroid cluster)
 
+-- Type system can't handle `map fromList . create` here; ($) is magical according to John Hughes.
 assign :: Metric a => (Vector Double -> a) -> Vector Cluster -> Vector Point -> Vector (Vector Point)
-assign metric clusters points = create $ do
-  vector <- MV.replicate (length clusters) empty
+assign metric clusters points = map fromList $ create $ do
+  vector <- MV.replicate (length clusters) []
   points `forM_` \point -> do
     let cluster  = closestCluster metric clusters point
         position = identifier cluster
     points' <- MV.read vector position
-    MV.write vector position $ point `cons` points'
+    MV.write vector position $ point : points'
   return vector
 
 assignPS :: Metric a => (Vector Double -> a) -> Vector Cluster -> Vector Point -> Vector PointSum
