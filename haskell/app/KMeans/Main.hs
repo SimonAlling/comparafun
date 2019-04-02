@@ -45,10 +45,10 @@ mainWith params@(partitions, seed, n, k) whichOne =
 
 benchmarkConfig :: BenchmarkConfig
 benchmarkConfig = BenchmarkConfig
-  { ns = [30000]
+  { ns = [10000, 30000]
   , ks = [3, 5, 10, 20]
   , seeds = [1..3]
-  , parts = [20, 50, 100]
+  , parts = [20, 100, 500]
   }
 
 batch :: IO ()
