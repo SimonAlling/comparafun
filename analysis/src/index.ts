@@ -34,7 +34,7 @@ const BENCHMARK_DIVIDER = "-------- BENCHMARK";
 
 const REGEX_ARCH = new RegExp([
   r`Detected (\d+) hardware threads`,
-  r`Using (\d+) HECs`,
+  r`Using (\d+) HECs?`,
 ].join(r`\n`));
 
 const REGEX_CONFIG = new RegExp([
