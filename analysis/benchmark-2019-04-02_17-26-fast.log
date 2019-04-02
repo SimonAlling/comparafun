@@ -1,0 +1,75 @@
+-------- SUITE
+Detected 24 hardware threads
+Using 1 HEC
+***** Benchmark configuration *****
+  n:           10000, 20000, 30000, 40000, 50000
+  k:           3
+  seed:        3
+  partitions:  
+***********************************
+
+-------- BENCHMARK
+n = 10000
+k = 3
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 81.73 ms   (75.23 ms .. 86.08 ms)
+                     0.993 R²   (0.981 R² .. 0.999 R²)
+mean                 99.63 ms   (92.78 ms .. 107.6 ms)
+std dev              12.17 ms   (9.593 ms .. 16.10 ms)
+variance introduced by outliers: 42% (moderately inflated)
+
+-------- BENCHMARK
+n = 20000
+k = 3
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 184.5 ms   (180.8 ms .. 189.1 ms)
+                     0.999 R²   (0.998 R² .. 1.000 R²)
+mean                 187.9 ms   (185.8 ms .. 190.5 ms)
+std dev              3.254 ms   (2.290 ms .. 4.205 ms)
+variance introduced by outliers: 14% (moderately inflated)
+
+-------- BENCHMARK
+n = 30000
+k = 3
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 287.5 ms   (285.6 ms .. 289.6 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 289.2 ms   (288.5 ms .. 290.6 ms)
+std dev              1.480 ms   (64.07 μs .. 2.030 ms)
+variance introduced by outliers: 16% (moderately inflated)
+
+-------- BENCHMARK
+n = 40000
+k = 3
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 395.0 ms   (372.1 ms .. 411.0 ms)
+                     0.999 R²   (0.999 R² .. 1.000 R²)
+mean                 404.2 ms   (397.2 ms .. 416.2 ms)
+std dev              11.48 ms   (700.4 μs .. 14.18 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+-------- BENCHMARK
+n = 50000
+k = 3
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 515.6 ms   (496.1 ms .. NaN s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 519.7 ms   (513.7 ms .. 527.1 ms)
+std dev              8.397 ms   (130.7 μs .. 10.36 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
