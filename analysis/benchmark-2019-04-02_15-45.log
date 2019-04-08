@@ -1,0 +1,88 @@
+-------- SUITE
+Detected 24 hardware threads
+Using 16 HECs
+***** Benchmark configuration *****
+  n:           30000
+  k:           3, 20
+  seed:        3
+  partitions:  20, 100
+***********************************
+
+-------- BENCHMARK
+n = 30000
+k = 3
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 248.1 ms   (195.2 ms .. 265.4 ms)
+                     0.984 R²   (0.923 R² .. 1.000 R²)
+mean                 281.1 ms   (265.0 ms .. 317.1 ms)
+std dev              28.12 ms   (1.484 ms .. 36.14 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+-------- BENCHMARK
+n = 30000
+k = 3
+seed = 3
+partitions = 20
+
+benchmarking kmeans_par
+time                 316.6 ms   (234.0 ms .. 350.4 ms)
+                     0.989 R²   (0.962 R² .. 1.000 R²)
+mean                 320.9 ms   (304.8 ms .. 340.1 ms)
+std dev              22.40 ms   (13.91 ms .. 30.79 ms)
+variance introduced by outliers: 17% (moderately inflated)
+
+-------- BENCHMARK
+n = 30000
+k = 3
+seed = 3
+partitions = 100
+
+benchmarking kmeans_par
+time                 255.4 ms   (241.1 ms .. 266.7 ms)
+                     0.998 R²   (0.994 R² .. 1.000 R²)
+mean                 240.9 ms   (233.0 ms .. 246.8 ms)
+std dev              8.891 ms   (5.113 ms .. 13.63 ms)
+variance introduced by outliers: 16% (moderately inflated)
+
+-------- BENCHMARK
+n = 30000
+k = 20
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 1.040 s    (1.020 s .. 1.082 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.066 s    (1.052 s .. 1.088 s)
+std dev              22.70 ms   (4.234 ms .. 29.68 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+-------- BENCHMARK
+n = 30000
+k = 20
+seed = 3
+partitions = 20
+
+benchmarking kmeans_par
+time                 1.019 s    (1.005 s .. 1.035 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.025 s    (1.021 s .. 1.031 s)
+std dev              6.422 ms   (1.114 ms .. 8.355 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+-------- BENCHMARK
+n = 30000
+k = 20
+seed = 3
+partitions = 100
+
+benchmarking kmeans_par
+time                 516.4 ms   (506.3 ms .. NaN s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 522.3 ms   (518.5 ms .. 525.5 ms)
+std dev              4.140 ms   (1.954 ms .. 5.367 ms)
+variance introduced by outliers: 19% (moderately inflated)
+

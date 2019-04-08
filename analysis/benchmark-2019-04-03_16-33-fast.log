@@ -1,0 +1,135 @@
+stack exec -- comparafun-kmeans batch kmeans +RTS -H1G -A100M
+-------- SUITE
+Detected 24 hardware threads
+Using 1 HEC
+***** Benchmark configuration *****
+  n:           1000, 2000, 4000, 8000, 16000
+  k:           2, 10
+  seed:        3
+  partitions:  
+***********************************
+
+-------- BENCHMARK
+n = 1000
+k = 2
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 5.472 ms   (5.419 ms .. 5.521 ms)
+                     0.999 R²   (0.999 R² .. 1.000 R²)
+mean                 5.585 ms   (5.552 ms .. 5.642 ms)
+std dev              136.2 μs   (86.60 μs .. 205.7 μs)
+
+-------- BENCHMARK
+n = 1000
+k = 10
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 17.40 ms   (17.28 ms .. 17.51 ms)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 17.55 ms   (17.48 ms .. 17.63 ms)
+std dev              181.3 μs   (145.7 μs .. 241.6 μs)
+
+-------- BENCHMARK
+n = 2000
+k = 2
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 11.92 ms   (11.85 ms .. 12.03 ms)
+                     0.999 R²   (0.998 R² .. 1.000 R²)
+mean                 12.01 ms   (11.96 ms .. 12.08 ms)
+std dev              162.9 μs   (107.3 μs .. 277.0 μs)
+
+-------- BENCHMARK
+n = 2000
+k = 10
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 35.91 ms   (35.73 ms .. 36.08 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 36.24 ms   (36.06 ms .. 36.42 ms)
+std dev              350.8 μs   (287.9 μs .. 442.1 μs)
+
+-------- BENCHMARK
+n = 4000
+k = 2
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 26.79 ms   (26.57 ms .. 26.98 ms)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 27.35 ms   (27.18 ms .. 27.53 ms)
+std dev              369.4 μs   (310.6 μs .. 443.9 μs)
+
+-------- BENCHMARK
+n = 4000
+k = 10
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 73.08 ms   (72.19 ms .. 74.24 ms)
+                     0.999 R²   (0.998 R² .. 1.000 R²)
+mean                 73.71 ms   (73.35 ms .. 74.79 ms)
+std dev              985.4 μs   (364.2 μs .. 1.685 ms)
+
+-------- BENCHMARK
+n = 8000
+k = 2
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 58.14 ms   (57.54 ms .. 58.59 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 59.61 ms   (59.17 ms .. 60.43 ms)
+std dev              1.085 ms   (751.6 μs .. 1.547 ms)
+
+-------- BENCHMARK
+n = 8000
+k = 10
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 148.7 ms   (147.6 ms .. 149.3 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 150.5 ms   (149.8 ms .. 151.4 ms)
+std dev              1.176 ms   (825.3 μs .. 1.517 ms)
+variance introduced by outliers: 12% (moderately inflated)
+
+-------- BENCHMARK
+n = 16000
+k = 2
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 121.3 ms   (119.4 ms .. 122.3 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 125.4 ms   (123.7 ms .. 127.9 ms)
+std dev              3.276 ms   (2.189 ms .. 4.267 ms)
+variance introduced by outliers: 11% (moderately inflated)
+
+-------- BENCHMARK
+n = 16000
+k = 10
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 313.2 ms   (309.8 ms .. 317.1 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 314.1 ms   (312.8 ms .. 315.6 ms)
+std dev              1.728 ms   (1.047 ms .. 2.622 ms)
+variance introduced by outliers: 16% (moderately inflated)
+
+-------- DONE

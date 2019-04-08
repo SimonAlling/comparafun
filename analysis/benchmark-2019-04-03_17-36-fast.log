@@ -1,0 +1,77 @@
+stack exec -- comparafun-kmeans batch kmeans +RTS -H1G -A100M
+-------- SUITE
+Detected 24 hardware threads
+Using 1 HEC
+***** Benchmark configuration *****
+  n:           1000, 2000, 4000, 8000, 16000
+  k:           100
+  seed:        3
+  partitions:  
+***********************************
+
+-------- BENCHMARK
+n = 1000
+k = 100
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 134.6 ms   (117.7 ms .. 147.6 ms)
+                     0.986 R²   (0.939 R² .. 1.000 R²)
+mean                 159.4 ms   (146.2 ms .. 180.8 ms)
+std dev              23.27 ms   (13.65 ms .. 30.46 ms)
+variance introduced by outliers: 41% (moderately inflated)
+
+-------- BENCHMARK
+n = 2000
+k = 100
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 296.6 ms   (294.8 ms .. 299.7 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 298.6 ms   (297.4 ms .. 300.5 ms)
+std dev              1.898 ms   (705.2 μs .. 2.550 ms)
+variance introduced by outliers: 16% (moderately inflated)
+
+-------- BENCHMARK
+n = 4000
+k = 100
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 598.5 ms   (580.2 ms .. 619.6 ms)
+                     1.000 R²   (NaN R² .. 1.000 R²)
+mean                 607.9 ms   (601.0 ms .. 613.5 ms)
+std dev              7.544 ms   (2.787 ms .. 10.23 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+-------- BENCHMARK
+n = 8000
+k = 100
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 1.227 s    (1.187 s .. 1.248 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.216 s    (1.203 s .. 1.221 s)
+std dev              8.718 ms   (755.5 μs .. 11.43 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+-------- BENCHMARK
+n = 16000
+k = 100
+seed = 3
+partitions = 1
+
+benchmarking kmeans_seq
+time                 2.493 s    (2.442 s .. 2.530 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 2.457 s    (2.440 s .. 2.473 s)
+std dev              19.32 ms   (16.07 ms .. 21.14 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+-------- DONE
