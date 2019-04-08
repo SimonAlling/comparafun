@@ -1,0 +1,51 @@
+stack exec -- comparafun-kmeans batch kmeans +RTS -H1G -A100M
+-------- SUITE
+Detected 24 hardware threads
+Using 20 HECs
+***** Benchmark configuration *****
+  n:           32000
+  k:           50
+  seed:        1, 2, 3
+  partitions:  3200
+***********************************
+
+-------- BENCHMARK
+n = 32000
+k = 50
+seed = 1
+partitions = 3200
+
+benchmarking kmeans_par
+time                 7.257 s    (5.870 s .. 8.120 s)
+                     0.996 R²   (0.987 R² .. 1.000 R²)
+mean                 7.105 s    (6.766 s .. 7.298 s)
+std dev              329.3 ms   (95.85 ms .. 446.3 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+-------- BENCHMARK
+n = 32000
+k = 50
+seed = 2
+partitions = 3200
+
+benchmarking kmeans_par
+time                 5.512 s    (4.512 s .. 6.811 s)
+                     0.994 R²   (0.980 R² .. 1.000 R²)
+mean                 6.457 s    (5.953 s .. 7.196 s)
+std dev              704.9 ms   (206.8 ms .. 925.0 ms)
+variance introduced by outliers: 23% (moderately inflated)
+
+-------- BENCHMARK
+n = 32000
+k = 50
+seed = 3
+partitions = 3200
+
+benchmarking kmeans_par
+time                 5.421 s    (4.617 s .. 6.355 s)
+                     0.995 R²   (0.994 R² .. 1.000 R²)
+mean                 6.637 s    (6.031 s .. 7.135 s)
+std dev              637.1 ms   (298.3 ms .. 849.5 ms)
+variance introduced by outliers: 22% (moderately inflated)
+
+-------- DONE
