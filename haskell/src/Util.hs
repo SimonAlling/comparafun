@@ -1,10 +1,12 @@
 module Util
     ( printHECs
     , printCPUInfo
+    , printSystemInfo
     , compose2
     , compose3
     , (<$$>)
     , (<$$$>)
+    , equality
     ) where
 
 import GHC.Conc (getNumCapabilities, getNumProcessors)
@@ -19,6 +21,9 @@ compose3 = (.).(.).(.)
 
 (<$$$>) = compose3
 
+printSystemInfo :: IO ()
+printSystemInfo = printCPUInfo >> printHECs
+
 printHECs :: IO ()
 printHECs = do
   n <- getNumCapabilities
@@ -28,3 +33,6 @@ printCPUInfo :: IO ()
 printCPUInfo = do
   t <- getNumProcessors
   putStrLn $ "Detected " ++ show t ++ " hardware thread" ++ (if t > 1 then "s" else "")
+
+equality :: Show a => String -> a -> String
+equality name value = name ++ " = " ++ show value

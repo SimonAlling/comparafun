@@ -2,7 +2,6 @@
 
 module KMeans
     ( kmeans_seq
-    , theirkmeans
     , centroidOf
     , Point
     , Cluster
@@ -13,7 +12,6 @@ import Control.Parallel.Strategies (parListChunk, rdeepseq, using)
 import Data.List (sort, minimumBy, groupBy)
 import Data.Ord (comparing)
 import Data.Function (on)
-import qualified Data.KMeans as KM; theirkmeans = KM.kmeans
 
 newtype Dimensions = D Int
   deriving (Eq, Show)
