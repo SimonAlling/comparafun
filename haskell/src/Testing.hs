@@ -66,7 +66,7 @@ runKmeans mode points k = kmeans expectDivergent metric points initial
       then error $ show (V.length points) ++ " points, but k = " ++ show k
       else V.zipWith (flip Cluster) points (V.fromList [0 .. k-1])
     expectDivergent :: ExpectDivergent
-    expectDivergent = ExpectDivergent 10
+    expectDivergent = ExpectDivergent 1000
     metric :: Vector Double -> Vector Double
     metric = id
 

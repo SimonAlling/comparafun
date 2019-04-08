@@ -46,26 +46,20 @@ mainWith params@(partitions, seed, n, k) whichOne =
 benchmarkConfig :: BenchmarkConfig
 benchmarkConfig = BenchmarkConfig
   { ns = [10000, 30000]
-  , ks = [3, 5, 10, 20]
+  , ks = [2, 10, 50]
   , seeds = [1..3]
   , parts = [20, 100, 500]
   }
 
 batch :: IO ()
-batch =
-  let
-    theNs = ns benchmarkConfig
-    theKs = ks benchmarkConfig
-    theSeeds = seeds benchmarkConfig
-    theParts = parts benchmarkConfig
-  in do
-    printBenchmarkConfig benchmarkConfig
-    with theNs as $ \n ->
-      with theKs as $ \k ->
-        with theSeeds as $ \seed -> do
-          mainWith (Partitions 1, seed, n, k) OnlySequential
-          with theParts as $ \partitions ->
-            mainWith (Partitions partitions, seed, n, k) OnlyParallel
+batch = do
+  printBenchmarkConfig benchmarkConfig
+  with (ns benchmarkConfig) as $ \n ->
+    with (ks benchmarkConfig) as $ \k ->
+      with (seeds benchmarkConfig) as $ \seed -> do
+        mainWith (Partitions 1, seed, n, k) OnlySequential
+        with (pure $ n `div` 20) as $ \partitions ->
+          mainWith (Partitions partitions, seed, n, k) OnlyParallel
   where
     with = const . flip mapM_
     as = ()
