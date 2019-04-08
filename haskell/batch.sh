@@ -7,13 +7,15 @@ readonly collect="tee -a $LOG_FILE"
 
 stack build
 
+echo "$cmd" | $collect
+
 echo "**** 4 HECs ****"
 $cmd -N4 | $collect
 
-echo "**** 8 HECs ****"
-$cmd -N8 | $collect
+echo "**** 10 HECs ****"
+$cmd -N10 | $collect
 
-echo "**** 16 HECs ****"
-$cmd -N16 | $collect
+echo "**** 20 HECs ****"
+$cmd -N20 | $collect
 
-echo "Done!"
+echo "-------- DONE" | $collect
