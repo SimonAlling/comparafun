@@ -5,41 +5,15 @@ module KMeansStuff where
 import Data.Metric (Metric(..))
 import Data.Vector (Vector(..))
 import qualified Data.Vector as V
-import Test.QuickCheck (Arbitrary, Gen, arbitrary, choose)
-import Algorithms.Lloyd.Sequential (Point(..))
+import Algorithms.Lloyd.Sequential (Point(..), Cluster(..), ExpectDivergent(..))
+import Algorithms.Lloyd.Strategies (Partitions(..))
+import qualified Algorithms.Lloyd.Sequential as LloydSeq
+import qualified Algorithms.Lloyd.Strategies as LloydPar
 import Data.Function (on)
+import Testing (Parallelism(..), Seed, Size, Interval, Dimensions, vectorFromSeed)
 import Util ((<$$>))
 
-newtype Dimensions = D Int
-  deriving (Eq, Show)
-
-unDim :: Dimensions -> Int
-unDim (D d) = d
-
-instance Enum Dimensions where
-  fromEnum (D d) = d
-  toEnum = D
-
-instance Ord Dimensions where
-  compare = compare `on` unDim
-
-instance Num Dimensions where
-  (+) = D <$$> ((+) `on` unDim)
-  (*) = D <$$> ((*) `on` unDim)
-  abs = D . abs . unDim
-  signum = D . signum . unDim
-  fromInteger = D . fromIntegral
-  negate = D . negate . unDim
-
-instance Real Dimensions where
-  toRational = toRational . unDim
-
-instance Integral Dimensions where
-  quotRem (D a) (D b) = let (x, y) = quotRem a b in (D x, D y)
-  toInteger = toInteger . unDim
-
-instance Arbitrary Dimensions where
-  arbitrary = D <$> choose (1, 5)
+type K = Int
 
 instance Metric (Vector Double) where
   distance = squareDistance
@@ -47,8 +21,24 @@ instance Metric (Vector Double) where
 squareDistance :: Num a => Vector a -> Vector a -> a
 squareDistance = V.sum <$$> V.zipWith ((^2) <$$> (-))
 
-genVector :: Arbitrary a => Dimensions -> Gen (Vector a)
-genVector (D d) = V.replicateM d arbitrary
+pointFromSeed :: Seed -> Interval Double -> Dimensions -> Point
+pointFromSeed seed lohi dim = Point $ vectorFromSeed seed lohi dim
 
-genPoint :: Dimensions -> Gen Point
-genPoint = fmap Point . genVector
+generateKMeansData :: Seed -> (Double, Double) -> Dimensions -> Size -> Vector Point
+generateKMeansData seed lohi dim n = V.map (Point . (flip (flip vectorFromSeed lohi) dim) . fromIntegral) (V.fromList [1..n])
+
+runKmeans :: Parallelism Int -> Vector Point -> K -> Vector (Vector Point)
+runKmeans parallelism points k = kmeans expectDivergent metric points initial
+  where
+    kmeans = case parallelism of
+      Sequential -> LloydSeq.kmeans
+      Parallel p -> ($ Partitions p) <$$> LloydPar.kmeans
+    initial :: Vector Cluster
+    initial =
+      if V.length points < k
+      then error $ show (V.length points) ++ " points, but k = " ++ show k
+      else V.zipWith (flip Cluster) points (V.fromList [0 .. k-1])
+    expectDivergent :: ExpectDivergent
+    expectDivergent = ExpectDivergent 100000
+    metric :: Vector Double -> Vector Double
+    metric = id

@@ -23,7 +23,6 @@ dependencies:
 - criterion
 - safe
 - parallel
-- kmeans
 - QuickCheck
 - deepseq
 - vector
@@ -36,19 +35,9 @@ library:
   source-dirs: src
 
 executables:
-  comparafun-fib:
+  comparafun:
     main:                Main.hs
-    source-dirs:         app/Fib
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -O2
-    - -feager-blackholing
-    dependencies:
-    - comparafun
-  comparafun-kmeans:
-    main:                Main.hs
-    source-dirs:         app/KMeans
+    source-dirs:         app
     ghc-options:
     - -threaded
     - -rtsopts
