@@ -113,6 +113,8 @@ stdenv.mkDerivation {
     )))
     gnumake
     hasklig
+    haskellPackages.cabal-install
+    cabal2nix
 
     # Scala
     openjdk
