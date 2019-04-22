@@ -25,10 +25,10 @@ instance SuiteConfig KMeansConfiguration where
 
 defaultKMeansConfig :: KMeansConfiguration
 defaultKMeansConfig = KMeansConfiguration
-  { ns = [10000, 30000]
-  , ks = [2, 10, 50]
-  , seeds = [1..3]
-  , parts = map (const . const) [ 20, 100, 500 ]
+  { ns = [10000]
+  , ks = [200]
+  , seeds = [3]
+  , parts = [ flip const ]
   }
 
 printKMeansBenchmarkInfo :: KMeansParameters -> IO ()
