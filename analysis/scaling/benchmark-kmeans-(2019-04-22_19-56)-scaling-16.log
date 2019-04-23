@@ -1,0 +1,23 @@
+stack exec -- comparafun kmeans batch +RTS -H1G -A100M -N16 -RTS --output kmeans-16.html
+Detected 24 hardware threads
+Using 16 HECs
+********* Benchmark suite *********
+  n:           20000
+  k:           200
+  seed:        3
+***********************************
+
+benchmarking kmeans/n = 20000/k = 200/seed = 3/par = 0
+time                 35.84 s    (NaN s .. 36.09 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 35.09 s    (34.54 s .. 35.36 s)
+std dev              421.3 ms   (149.5 ms .. 558.7 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking kmeans/n = 20000/k = 200/seed = 3/par = 16
+time                 5.596 s    (5.593 s .. NaN s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 5.619 s    (5.610 s .. 5.634 s)
+std dev              13.85 ms   (4.452 ms .. 17.95 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
