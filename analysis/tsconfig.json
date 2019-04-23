@@ -17,6 +17,7 @@
         "preserveConstEnums": true
     },
     "files": [
+        "src/Times.ts",
         "src/index.ts"
     ]
 }
