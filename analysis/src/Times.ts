@@ -1,5 +1,6 @@
 import { fmap_null } from "fmap-null-undefined";
 import * as fs from "fs";
+import * as shell from "shelljs";
 
 function isSomething<T>(x: T | null): x is T {
   return x !== null;
@@ -28,16 +29,29 @@ function getTimes(raw: string): ReadonlyArray<Time> {
 
 main();
 
+function stripSlash(s: string): string {
+  return s.replace(/\/$/, "");
+}
+
 function main() {
-  const all: Array<ReadonlyArray<Time>> = [];
-  for (let i = 1; i <= 20; i++) {
-    const filename = `./scaling/benchmark-kmeans-(2019-04-22_19-56)-scaling-${i.toString().padStart(2, "0")}.log`;
-    const content = fs.readFileSync(filename);
-    all.push(getTimes(content.toString()));
+  if (process.argv.length > 2) { // 0 = interpreter; 1 = script
+    // Arguments exist.
+    const dir = process.argv[2];
+    const all: Array<ReadonlyArray<Time>> = [];
+    const pattern = [ stripSlash(dir), `*.log` ].join("/");
+    shell.exec(`ls -1v ${pattern}`, (code, stdout, stderr) => {
+      stdout.split("\n").filter(line => line !== "").forEach(line => {
+        const filename = line.replace(/^(?!\/)/, "./");
+        const content = fs.readFileSync(filename);
+        all.push(getTimes(content.toString()));
+      })
+      all.forEach(x => {
+        console.log(x.join("\t"))
+      });
+    });
+  } else {
+    console.warn("No directory given.");
   }
-  all.forEach(x => {
-    console.log(x.join("\t"))
-  });
 }
 
 function normalize(n: number, unit: UnitString): Time {
