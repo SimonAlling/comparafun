@@ -58,7 +58,7 @@ benchFibWith params@(parallelism, depth, width) =
   where
     (name, f) = case parallelism of
       Sequential -> ("fib_seq", fibonaccis_seq)
-      Parallel _ -> ("fib_par", fibonaccis_par)
+      Parallel chunks -> ("fib_par", fibonaccis_par chunks)
 
 createKMeansBatch :: Threads -> KMeansConfiguration -> Benchmark
 createKMeansBatch threads config = bgroup "kmeans" $ map withN $ problemSizes config
@@ -93,7 +93,7 @@ createFibBatch threads config = bgroup "fib" $ map withWidth $ problemSizes conf
             testData = replicate width depth
             theSeqOne, theParOne :: Benchmark
             theSeqOne = bench "seq" $ nf fibonaccis_seq testData
-            theParOne = bench "par" $ nf fibonaccis_par testData
+            theParOne = bench "par" $ nf (fibonaccis_par threads) testData
 
 runBenchmark :: Maybe String -> Benchmark -> IO ()
 runBenchmark info b = do

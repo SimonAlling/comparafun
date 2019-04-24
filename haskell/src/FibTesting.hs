@@ -9,7 +9,7 @@ import Testing (Parallelism(..), SuiteConfig(..), Seed, Size)
 type Depth = Int
 type Width = Int
 
-type FibParameters = (Parallelism (), Depth, Width)
+type FibParameters = (Parallelism Int, Depth, Width)
 
 data FibConfiguration = FibConfiguration
   { depths :: [Depth]
