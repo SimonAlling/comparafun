@@ -1,3 +1,5 @@
+import fib.{fibonaccis_par, fibonaccis_seq}
+
 object Main {
   def bind[A, B](m: Option[A], f: A => Option[B]): Option[B] = {
     m match {
@@ -25,33 +27,27 @@ object Main {
     if (n < 1) Nil else x :: replicate(n - 1, x)
   }
 
-  def fib(n: Int): Int = {
-    if (n == 0) 0 else if (n == 1) 1 else fib (n - 2) + fib (n - 1)
-  }
-
-  def fibonaccis_seq(xs: List[Int]) = {
-    xs.map(fib)
-  }
-
-  def fibonaccis_par(xs: List[Int]) = {
-    xs.par.map(fib)
-  }
-
   def printHelp(): Unit = {
     println("Usage: ")
+    println("main DEPTH WIDTH")
   }
 
-  def mainWith(bigNumber: Int): Unit = {
-    val numberOfItems = 32 * 32
-    val ints = replicate(numberOfItems, bigNumber)
-    fibonaccis_par(ints)
+  def mainWith(depth: Int, width: Int): Unit = {
+    val ints = replicate(width, depth)
+    fibonaccis_seq(ints)
   }
 
   def main(args: Array[String]): Unit = {
-    val maybeBigNumber = bind(headMay(args.toList), readMaybeInt)
-    maybeBigNumber match {
-      case Some(n) => mainWith(n)
-      case None => printHelp
+    args.toList match {
+      case depth :: width :: rest => {
+        val maybeDepth = readMaybeInt(depth)
+        val maybeWidth = readMaybeInt(width)
+        (maybeDepth, maybeWidth) match {
+          case (Some(d), Some(w)) => mainWith(d, w)
+          case _ => printHelp
+        }
+      }
+      case _ => printHelp
     }
   }
 }
