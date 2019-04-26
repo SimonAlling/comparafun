@@ -1,0 +1,104 @@
+<svg width="1152" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<style>
+  .points {
+    fill: #BBBBBF;
+  }
+  #chart_after .red { fill: rgb(255, 80, 80); }
+  #chart_after .green { fill: rgb(80, 160, 80); }
+  #chart_after .blue { fill: rgb(80, 80, 250); }
+  .axis {
+    stroke: gray; stroke-width: 2; fill: none;
+  }
+  text {
+    font-size: 2em;
+  }
+  text.axis {
+    font-style: italic;
+    stroke: none;
+    font-family: "Times New Roman", serif;
+    fill: gray;
+  }
+</style>
+
+<defs>
+  <polyline class="axis" id="arrowhead" points="-4,0  -16,-8  0,0  -16,8  -4,0" />
+  <g id="x_axis">
+    <line class="axis" x1="0" y1="0" x2="448" y2="0" />
+    <use xlink:href="#arrowhead" x="448" y="0" />
+  </g>
+  <g id="y_axis">
+    <line class="axis" x1="0" y1="0" x2="448" y2="0" />
+    <use xlink:href="#arrowhead" x="448" y="0" />
+  </g>
+  <g id="point">
+    <circle cx="10" cy="10" r="8" stroke="black" />
+  </g>
+  <g id="chart_before" transform="translate(32, 480) scale(1, -1)">
+    <text class="axis" x="-16" y="-454" transform="scale(1, -1)">y</text>
+    <text class="axis" x="454" y="20" transform="scale(1, -1)">x</text>
+    <use xlink:href="#x_axis" />
+    <use xlink:href="#y_axis" transform="rotate(90)" />
+    <g class="red points" transform="translate(0, 40)">
+      <use xlink:href="#point" x="50" y="40" />
+      <use xlink:href="#point" x="54" y="70" />
+      <use xlink:href="#point" x="140" y="20" />
+      <use xlink:href="#point" x="90" y="80" />
+      <use xlink:href="#point" x="150" y="56" />
+    </g>
+    <g class="blue points" transform="translate(-40, 60)">
+      <use xlink:href="#point" x="200" y="200" />
+      <use xlink:href="#point" x="240" y="170" />
+      <use xlink:href="#point" x="205" y="260" />
+      <use xlink:href="#point" x="300" y="220" />
+      <use xlink:href="#point" x="260" y="270" />
+      <use xlink:href="#point" x="340" y="250" />
+    </g>
+    <g class="green points">
+      <use xlink:href="#point" x="380" y="40" />
+      <use xlink:href="#point" x="354" y="80" />
+      <use xlink:href="#point" x="300" y="30" />
+    </g>
+  </g>
+  <g id="chart_after" transform="translate(32, 480) scale(1, -1)">
+    <text class="axis" x="-16" y="-454" transform="scale(1, -1)">y</text>
+    <text class="axis" x="454" y="20" transform="scale(1, -1)">x</text>
+    <use xlink:href="#x_axis" />
+    <use xlink:href="#y_axis" transform="rotate(90)" />
+    <g class="red points" transform="translate(0, 40)">
+      <use xlink:href="#point" x="50" y="40" />
+      <use xlink:href="#point" x="54" y="70" />
+      <use xlink:href="#point" x="140" y="20" />
+      <use xlink:href="#point" x="90" y="80" />
+      <use xlink:href="#point" x="150" y="56" />
+    </g>
+    <g class="blue points" transform="translate(-40, 60)">
+      <use xlink:href="#point" x="200" y="200" />
+      <use xlink:href="#point" x="240" y="170" />
+      <use xlink:href="#point" x="205" y="260" />
+      <use xlink:href="#point" x="300" y="220" />
+      <use xlink:href="#point" x="260" y="270" />
+      <use xlink:href="#point" x="340" y="250" />
+    </g>
+    <g class="green points">
+      <use xlink:href="#point" x="380" y="40" />
+      <use xlink:href="#point" x="354" y="80" />
+      <use xlink:href="#point" x="300" y="30" />
+    </g>
+  </g>
+</defs>
+
+<use xlink:href="#chart_before" />
+<use xlink:href="#chart_after" x="640" />
+<!-- MIDDLE ARROW: -->
+<g transform="translate(646, 256)">
+  <path
+    d="M 0 0  l -28 -46  l 0 16  l -112 0  l 0 60  l 112 0  l 0 16  Z"
+    fill="#F88" stroke="black"
+  />
+  <text x="-126" y="8">
+    <tspan style="font-style: italic;">k</tspan>-means
+  </text>
+</g>
+
+</svg>
