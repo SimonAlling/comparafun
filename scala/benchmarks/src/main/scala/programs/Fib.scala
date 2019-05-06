@@ -1,3 +1,5 @@
+import scala.collection.parallel._
+
 package object fib {
 
 def fib(n: Int): Int = {
@@ -8,8 +10,8 @@ def fibonaccis_seq(xs: List[Int]) = {
   xs.map(fib)
 }
 
-def fibonaccis_par(xs: List[Int]) = {
-  xs.par.map(fib)
+def fibonaccis_par(xs: ParSeq[Int]) = {
+  xs.map(fib)
 }
 
 }
