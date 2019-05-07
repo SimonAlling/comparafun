@@ -16,6 +16,7 @@ resolvers += "Sonatype OSS Snapshots" at
   "https://oss.sonatype.org/content/repositories/snapshots"
 
 libraryDependencies += "com.storm-enroute" %% "scalameter" % "0.17"
+libraryDependencies += "io.argonaut" %% "argonaut" % "6.2.2"
 
 testFrameworks += new TestFramework(
   "org.scalameter.ScalaMeterFramework")
