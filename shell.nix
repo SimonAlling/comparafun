@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixos-1903> {} }:
 
 with pkgs;
 
@@ -94,7 +94,7 @@ stdenv.mkDerivation {
     # Project dependencies
 
     # Haskell
-    (haskell.packages.ghc844.ghcWithPackages (
+    (haskell.packages.ghc864.ghcWithPackages (
     ps: with ps; with pkgs.haskell.lib; (
       [
         safe
@@ -105,16 +105,14 @@ stdenv.mkDerivation {
         criterion
 
         # Profiling
-        threadscope
-
-        # IDE tooling
-        hlint
+        # threadscope # broken according to Nix
       ]
     )))
     gnumake
     hasklig
     haskellPackages.cabal-install
     cabal2nix
+    stack
 
     # Scala
     openjdk

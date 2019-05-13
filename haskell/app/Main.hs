@@ -20,7 +20,7 @@ import KMeansStuff (K, runKmeans, generateKMeansData)
 import KMeansTesting (KMeansParameters, KMeansConfiguration(..), PartitionsCalculator, printKMeansBenchmarkInfo, showKMeansConfiguration, defaultKMeansConfig)
 import qualified KMeansTesting
 import FibTesting (Width, Depth, FibParameters, FibConfiguration(..), printFibBenchmarkInfo, showFibConfiguration, defaultFibConfig)
-import Fib (fibonaccis_seq, fibonaccis_par)
+import Fib (fibonaccis_seq, fibonaccis_par, fibonaccis_parChunk)
 import Algorithms.Lloyd.Sequential (Point(..))
 import Algorithms.Lloyd.Strategies (Partitions(..))
 
@@ -75,7 +75,7 @@ benchFibWith params@(parallelism, depth, width) =
   where
     (name, f) = case parallelism of
       Sequential -> ("fib_seq", fibonaccis_seq)
-      Parallel chunks -> ("fib_par", fibonaccis_par chunks)
+      Parallel chunks -> ("fib_parChunk", fibonaccis_parChunk chunks)
 
 createKMeansBatch :: Threads -> KMeansConfiguration -> Benchmark
 createKMeansBatch threads config = bgroup "kmeans" $ map withN $ problemSizes config
@@ -105,12 +105,12 @@ createFibBatch threads config = bgroup "fib" $ map withWidth $ problemSizes conf
     withWidth width = bgroup (equality "width" width) $ concatMap withDepth $ depths config
       where
         withDepth :: Depth -> [Benchmark]
-        withDepth depth = [ theSeqOne, theParOne ]
+        withDepth depth = concat [ if threads > 2 then [] else pure theSeqOne, pure theParChunkOne ]
           where
             testData = replicate width depth
-            theSeqOne, theParOne :: Benchmark
-            theSeqOne = bench "seq" $ nf fibonaccis_seq testData
-            theParOne = bench "par" $ nf (fibonaccis_par threads) testData
+            theSeqOne      = bench "seq"      $ nf (fibonaccis_seq)              testData
+            -- theParOne      = bench "par"      $ nf (fibonaccis_par)              testData
+            theParChunkOne = bench "parChunk" $ nf (fibonaccis_parChunk threads) testData
 
 runBenchmark :: Maybe String -> Benchmark -> IO ()
 runBenchmark info b = do
