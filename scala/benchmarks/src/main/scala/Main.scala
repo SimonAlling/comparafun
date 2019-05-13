@@ -9,15 +9,15 @@ import scala.io.Source
 import java.io.{FileNotFoundException, IOException}
 
 import fib.{fibonaccis_par, fibonaccis_seq}
-import KMeansStuff.{runKmeans}
+import KMeansStuff.{runKMeans}
 import Lloyd.Sequential.{Point}
 
 object Config {
   val filename = (n: Int, k: Int, seed: Int) => (extension: String) => s"kmeans-correctness-$n-$k-$seed.$extension"
-  val EXT_TESTDATA = ".testdata"
-  val EXT_HASKELL = ".haskell"
-  val EXT_EXPECTED = ".expected"
-  val EXT_ACTUAL = ".actual"
+  val EXT_TESTDATA = "testdata"
+  val EXT_HASKELL = "haskell"
+  val EXT_EXPECTED = "expected"
+  val EXT_ACTUAL = "actual"
   val OUTPUT_OK = "OK"
 }
 
@@ -45,13 +45,33 @@ extends App {
   val parsedHaskell: List[List[List[Double]]] = fileContentHaskell.decodeOption[List[List[List[Double]]]].getOrElse(Nil)
   val vectorizedExpected = parsedHaskell.map(_.map(_.toVector).toVector).toVector
   // Run
-  val result = runKmeans(vectorizedTestData, k)
+  val resultSeq = runKMeans(vectorizedTestData, k, 1)
+  val TODO_PARALLELISM = 2
+  val resultPar = runKMeans(vectorizedTestData, k, TODO_PARALLELISM)
   val showSomeOf = (l: Int, showable: Any) => { val s = showable.toString; if (s.length > l) s.take(l) + "..." else s }
   val MAX_LENGTH = 1000
   val serialize = KMeansTools.serializeResult _
-  if (result.toString == vectorizedExpected.toString)
-    println(Config.OUTPUT_OK)
-  else {
+  if (resultSeq.toString == vectorizedExpected.toString) {
+    if (resultSeq == resultPar) {
+      println(Config.OUTPUT_OK)
+      File.write(filename(Config.EXT_EXPECTED), "")
+      File.write(filename(Config.EXT_ACTUAL), "")
+    } else {
+      println("Incorrect parallel implementation.")
+      println("")
+      println("Expected:")
+      println("")
+      println(showSomeOf(MAX_LENGTH, serialize(resultSeq)))
+      println("")
+      println("")
+      println("Actual:")
+      println("")
+      println(showSomeOf(MAX_LENGTH, serialize(resultPar)))
+      File.write(filename(Config.EXT_EXPECTED), serialize(resultSeq))
+      File.write(filename(Config.EXT_ACTUAL), serialize(resultPar))
+    }
+  } else {
+    println("Incorrect sequential implementation.")
     println("")
     println("Expected:")
     println("")
@@ -60,10 +80,10 @@ extends App {
     println("")
     println("Actual:")
     println("")
-    println(showSomeOf(MAX_LENGTH, serialize(result)))
+    println(showSomeOf(MAX_LENGTH, serialize(resultSeq)))
+    File.write(filename(Config.EXT_EXPECTED), serialize(vectorizedExpected))
+    File.write(filename(Config.EXT_ACTUAL), serialize(resultSeq))
   }
-  File.write(filename(Config.EXT_EXPECTED), serialize(vectorizedExpected))
-  File.write(filename(Config.EXT_ACTUAL), serialize(result))
 }
 
 object KMeansBenchmark
@@ -71,12 +91,16 @@ extends Bench.OfflineReport {
   val n = 100
   val k = 2
   val seed = 3
-  val fileContent = File.read(Config.filename(n, k, seed) + Config.EXT_TESTDATA)
+  val TODO_PARALLELISM = 2
+  val fileContent = File.read(Config.filename(n, k, seed)(Config.EXT_TESTDATA))
   val parsedTestData: List[List[Double]] = fileContent.decodeOption[List[List[Double]]].getOrElse(Nil)
   val vectorizedTestData = parsedTestData.map(_.toVector).toVector
   val unit = Gen.unit("dummy")
   measure method "kmeans_seq" in {
-    using (unit) in { _ => runKmeans(vectorizedTestData, k) }
+    using (unit) in { _ => runKMeans(vectorizedTestData, k, 1) }
+  }
+  measure method "kmeans_par" in {
+    using (unit) in { _ => runKMeans(vectorizedTestData, k, TODO_PARALLELISM) }
   }
 }
 
