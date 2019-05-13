@@ -18,6 +18,7 @@ import Util (equality, printSystemInfo)
 import Testing (Parallelism(..), SuiteConfig(..), Seed, Size, Threads, Interval, Dimensions)
 import KMeansStuff (K, runKmeans, generateKMeansData)
 import KMeansTesting (KMeansParameters, KMeansConfiguration(..), PartitionsCalculator, printKMeansBenchmarkInfo, showKMeansConfiguration, defaultKMeansConfig)
+import qualified KMeansTesting
 import FibTesting (Width, Depth, FibParameters, FibConfiguration(..), printFibBenchmarkInfo, showFibConfiguration, defaultFibConfig)
 import Fib (fibonaccis_seq, fibonaccis_par)
 import Algorithms.Lloyd.Sequential (Point(..))
@@ -28,6 +29,7 @@ deriving instance NFData (Point)
 
 data UserRequest
   = KMeans (Maybe KMeansParameters)
+  | KMeansCorrectness KMeansParameters
   | Fib (Maybe FibParameters)
 
 interval :: Interval Double
@@ -35,6 +37,21 @@ interval = (0, 100)
 
 dimensions :: Dimensions
 dimensions = 3
+
+runKMeansWith :: KMeansParameters -> IO ()
+runKMeansWith params@(parallelism, seed, n, k) =
+  let
+    testData = generateKMeansData seed interval dimensions n
+    result = runKmeans parallelism testData k
+    serialize = show . fmap point
+    serializeResult = show . (fmap $ fmap point)
+    filename_testdata = KMeansTesting.filename "testdata" params
+    filename_expected = KMeansTesting.filename "haskell" params
+  in do
+    putStrLn $ "Writing kmeans test data to "++filename_testdata
+    writeFile filename_testdata (serialize testData)
+    printKMeansBenchmarkInfo params
+    writeFile filename_expected (serializeResult result)
 
 benchKMeansWith :: KMeansParameters -> IO ()
 benchKMeansWith params@(parallelism, seed, n, k) =
@@ -108,6 +125,7 @@ main =
       , "stack exec -- comparafun kmeans SIZE K SEED seq +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun kmeans SIZE K SEED PARTITIONS +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun kmeans batch +RTS -H1G -A100M -N4"
+      , "stack exec -- comparafun kmeans correctness SIZE K SEED"
       , "stack exec -- comparafun fib DEPTH WIDTH seq +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun fib DEPTH WIDTH CHUNK_SIZE +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun fib batch +RTS -H1G -A100M -N4"
@@ -120,6 +138,7 @@ main =
     processUserRequest :: Threads -> UserRequest -> IO ()
     processUserRequest t = \case
       KMeans x -> maybe runBatch_kmeans benchKMeansWith x
+      KMeansCorrectness x -> runKMeansWith x
       Fib x -> maybe runBatch_fib benchFibWith x
       where
         runBatch_kmeans = runBenchmark info_kmeans $ createKMeansBatch t defaultKMeansConfig
@@ -138,6 +157,11 @@ readMaybeParallelism = \case
 -- NOTE: String literals must be literals to work with pattern matching.
 parseArgs :: [String] -> Maybe UserRequest
 parseArgs = \case
+  ("kmeans" : "correctness" : s_n : s_k : s_seed : _) -> do
+    n <- readMaybeInt s_n
+    k <- readMaybeInt s_k
+    seed <- fromIntegral <$> readMaybeInt s_seed
+    return $ KMeansCorrectness (Sequential, seed, n, k)
   ("kmeans" : "batch" : _) -> pure $ KMeans Nothing
   ("kmeans" : s_n : s_k : s_seed : s_p : _) -> do
     n <- readMaybeInt s_n
