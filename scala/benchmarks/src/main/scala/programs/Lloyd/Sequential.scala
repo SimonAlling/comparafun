@@ -6,8 +6,7 @@ modified version of the Haskell package kmeans-par.
 */
 
 import scala.collection.parallel._
-import scala.collection.mutable
-import vector._
+import scala.collection.mutable._
 
 
 package object Sequential {
