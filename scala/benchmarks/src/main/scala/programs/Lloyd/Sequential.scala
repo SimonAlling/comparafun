@@ -5,8 +5,7 @@ This is almost a direct translation of Algorithms.Lloyd.Sequential from a
 modified version of the Haskell package kmeans-par.
 */
 
-import scala.collection.parallel._
-import scala.collection.mutable._
+import scala.collection.immutable._
 
 
 package object Sequential {
