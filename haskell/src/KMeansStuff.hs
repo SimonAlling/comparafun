@@ -1,4 +1,5 @@
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
 
 module KMeansStuff where
 
@@ -12,6 +13,7 @@ import qualified Algorithms.Lloyd.Strategies as LloydPar
 import Data.Function (on)
 import Testing (Parallelism(..), Seed, Size, Interval, Dimensions, vectorFromSeed)
 import Util ((<$$>))
+import Data.Random (Uniform, Distribution, uniform, sample)
 
 type K = Int
 
@@ -21,11 +23,11 @@ instance Metric (Vector Double) where
 squareDistance :: Num a => Vector a -> Vector a -> a
 squareDistance = V.sum <$$> V.zipWith ((^2) <$$> (-))
 
-pointFromSeed :: Seed -> Interval Double -> Dimensions -> Point
-pointFromSeed seed lohi dim = Point $ vectorFromSeed seed lohi dim
+pointFromSeed :: (Real a, Distribution Uniform a) => Seed -> Interval a -> Dimensions -> Point
+pointFromSeed seed lohi dim = Point $ fmap realToFrac $ vectorFromSeed seed lohi dim
 
-generateKMeansData :: Seed -> (Double, Double) -> Dimensions -> Size -> Vector Point
-generateKMeansData seed lohi dim n = V.map (Point . (flip (flip vectorFromSeed lohi) dim) . fromIntegral) (V.fromList [1..n])
+generateKMeansData :: (Real a, Distribution Uniform a) => Seed -> (a, a) -> Dimensions -> Size -> Vector Point
+generateKMeansData seed lohi dim n = V.map (Point . fmap realToFrac . (flip (flip vectorFromSeed lohi) dim) . fromIntegral) (V.fromList [1..n])
 
 runKmeans :: Parallelism Int -> Vector Point -> K -> Vector (Vector Point)
 runKmeans parallelism points k = kmeans expectDivergent metric points initial
