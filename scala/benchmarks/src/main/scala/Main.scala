@@ -54,8 +54,8 @@ extends App {
   if (resultSeq.toString == vectorizedExpected.toString) {
     if (resultSeq == resultPar) {
       println(Config.OUTPUT_OK)
-      File.write(filename(Config.EXT_EXPECTED), "")
-      File.write(filename(Config.EXT_ACTUAL), "")
+      File.write(filename(Config.EXT_EXPECTED), serialize(resultSeq))
+      File.write(filename(Config.EXT_ACTUAL), serialize(resultPar))
     } else {
       println("Incorrect parallel implementation.")
       println("")
