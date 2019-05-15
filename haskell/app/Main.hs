@@ -42,7 +42,8 @@ runKMeansWith :: KMeansParameters -> IO ()
 runKMeansWith params@(parallelism, seed, n, k) =
   let
     testData = generateKMeansData seed interval dimensions n
-    result = runKmeans parallelism testData k
+    resultSeq = runKmeans Sequential testData k
+    resultPar = runKmeans parallelism testData k
     serialize = show . fmap point
     serializeResult = show . (fmap $ fmap point)
     filename_testdata = KMeansTesting.filename "testdata" params
@@ -51,7 +52,10 @@ runKMeansWith params@(parallelism, seed, n, k) =
     putStrLn $ "Writing kmeans test data to "++filename_testdata
     writeFile filename_testdata (serialize testData)
     printKMeansBenchmarkInfo params
-    writeFile filename_expected (serializeResult result)
+    writeFile filename_expected (serializeResult resultSeq)
+    putStrLn $
+      if resultSeq == resultPar then "OK"
+      else "Parallel and sequential results differ."
 
 benchKMeansWith :: KMeansParameters -> IO ()
 benchKMeansWith params@(parallelism, seed, n, k) =
@@ -125,7 +129,7 @@ main =
       , "stack exec -- comparafun kmeans SIZE K SEED seq +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun kmeans SIZE K SEED PARTITIONS +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun kmeans batch +RTS -H1G -A100M -N4"
-      , "stack exec -- comparafun kmeans correctness SIZE K SEED"
+      , "stack exec -- comparafun kmeans correctness SIZE K SEED PARTITIONS"
       , "stack exec -- comparafun fib DEPTH WIDTH seq +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun fib DEPTH WIDTH CHUNK_SIZE +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun fib batch +RTS -H1G -A100M -N4"
@@ -157,11 +161,12 @@ readMaybeParallelism = \case
 -- NOTE: String literals must be literals to work with pattern matching.
 parseArgs :: [String] -> Maybe UserRequest
 parseArgs = \case
-  ("kmeans" : "correctness" : s_n : s_k : s_seed : _) -> do
+  ("kmeans" : "correctness" : s_n : s_k : s_seed : s_p : _) -> do
     n <- readMaybeInt s_n
     k <- readMaybeInt s_k
     seed <- fromIntegral <$> readMaybeInt s_seed
-    return $ KMeansCorrectness (Sequential, seed, n, k)
+    p <- readMaybeParallelism s_p
+    return $ KMeansCorrectness (p, seed, n, k)
   ("kmeans" : "batch" : _) -> pure $ KMeans Nothing
   ("kmeans" : s_n : s_k : s_seed : s_p : _) -> do
     n <- readMaybeInt s_n
