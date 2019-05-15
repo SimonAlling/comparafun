@@ -32,5 +32,5 @@ listFromSeed :: (Integral int, Num a, Distribution Uniform a) => Word64 -> (a, a
 listFromSeed seed (lo, hi) n = evalState st $ pureMT seed
   where st = replicateM (fromIntegral n) $ sample $ uniform lo hi
 
-vectorFromSeed :: Seed -> (Double, Double) -> Dimensions -> V.Vector Double
+vectorFromSeed :: (Num a, Distribution Uniform a) => Seed -> (a, a) -> Dimensions -> V.Vector a
 vectorFromSeed = compose3 V.fromList listFromSeed
