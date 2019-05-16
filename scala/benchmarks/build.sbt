@@ -24,3 +24,8 @@ testFrameworks += new TestFramework(
 logBuffered := false
 
 parallelExecution in Test := false
+
+scalacOptions ++= Seq(
+  "-optimize",
+  "-opt:_"
+)
