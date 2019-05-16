@@ -20,7 +20,7 @@ points to clusters:
 > import Data.Functor.Extras ((..:))
 > import Data.Metric (Metric(..))
 > import Data.Semigroup (Semigroup(..))
-> import Data.Vector (Vector(..), zipWith, map)
+> import Data.Vector (Vector(..), zipWith, map, fromList)
 > import Data.Vector.Split (chunkInto)
 > import Algorithms.Lloyd.Sequential (Cluster(..), Point(..), ExpectDivergent(..), PointSum(..), makeNewClusters, assignPS, assign)
 
@@ -64,5 +64,5 @@ be unused for part of the computation.
 >   where clusters' = step metric clusters points
 >
 > kmeans :: Metric a => ExpectDivergent -> (Vector Double -> a) -> Partitions -> Vector Point -> Vector Cluster -> Vector (Vector Point)
-> kmeans expectDivergent metric chunks points initial = assign metric clusters points
+> kmeans expectDivergent metric chunks points initial = fromList <$> assign metric clusters points
 >   where clusters = computeClusters expectDivergent metric chunks points initial

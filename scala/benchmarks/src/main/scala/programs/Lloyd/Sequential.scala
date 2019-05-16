@@ -57,14 +57,14 @@ def assign(
   metric: Metric[Point],
   clusters: Vector[Cluster],
   points: Vector[Point],
-): Vector[Vector[Point]] = {
+): Vector[List[Point]] = {
   val array: Array[List[Point]] = Array.tabulate(clusters.length)(_ => Nil)
   points.foreach(point => {
     val cluster = closestCluster(metric, clusters, point)
     val position = cluster.identifier
     array(position) = point :: array(position)
   })
-  array.map(_.toVector).toVector
+  array.toVector
 }
 
 def assignPS(
@@ -73,7 +73,7 @@ def assignPS(
   points: Vector[Point],
 ): Vector[PointSum] = {
   val z = emptyPointSum(points.head.length)
-  val reduce = (_: Vector[Point]).map(PointSum(1, _)).fold(z)(combinePointSums)
+  val reduce = (_: List[Point]).map(PointSum(1, _)).fold(z)(combinePointSums)
   assign(metric, clusters, points).map(reduce)
 }
 
@@ -121,7 +121,7 @@ def kmeans(
   initial: Vector[Cluster],
 ): Vector[Vector[Point]] = {
   val clusters = computeClusters(expectDivergent, metric, points, initial)
-  assign(metric, clusters, points)
+  assign(metric, clusters, points).map(_.toVector)
 }
 
 
