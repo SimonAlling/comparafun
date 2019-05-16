@@ -67,7 +67,7 @@ def kmeans(
   initial: Vector[Cluster],
 ): Vector[Vector[Point]] = {
   val clusters = computeClusters(expectDivergent, metric, partitions, points, initial)
-  assign(metric, clusters, points)
+  assign(metric, clusters, points).map(_.toVector)
 }
 
 

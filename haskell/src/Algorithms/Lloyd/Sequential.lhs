@@ -102,8 +102,8 @@ centroid:
 >   cluster <- clusters
 >   return (cluster, point `d` centroid cluster)
 >
-> assign :: Metric a => (Vector Double -> a) -> Vector Cluster -> Vector Point -> Vector (Vector Point)
-> assign metric clusters points = map fromList $ create $ do
+> assign :: Metric a => (Vector Double -> a) -> Vector Cluster -> Vector Point -> Vector [Point]
+> assign metric clusters points = create $ do
 >   vector <- MV.replicate (length clusters) []
 >   points `forM_` \point -> do
 >     let cluster  = closestCluster metric clusters point
@@ -143,7 +143,7 @@ convergence hasn't been observed some provided number of iterations:
 >   where clusters' = step metric clusters points
 >
 > kmeans :: Metric a => ExpectDivergent -> (Vector Double -> a) -> Vector Point -> Vector Cluster -> Vector (Vector Point)
-> kmeans expectDivergent metric points initial = assign metric clusters points
+> kmeans expectDivergent metric points initial = fromList <$> assign metric clusters points
 >   where clusters = computeClusters expectDivergent metric points initial
 
 A note on initialisation: typically clusters are randomly assigned to data
