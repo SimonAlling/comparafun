@@ -1,0 +1,48 @@
+:::Summary of regression test results - Accepter():::
+Test group: fibonaccis_seq
+- fibonaccis_seq.Test-0 measurements:
+  - at dummy -> (): passed
+    (mean = 3599.99 ms, ci = <3585.44 ms, 3614.54 ms>, significance = 1.0E-10)
+
+Test group: fibonaccis_par
+- fibonaccis_par.Test-1 measurements:
+  - at threads -> 1: passed
+    (mean = 3966.28 ms, ci = <3408.93 ms, 4523.63 ms>, significance = 1.0E-10)
+  - at threads -> 2: passed
+    (mean = 2009.05 ms, ci = <1730.33 ms, 2287.76 ms>, significance = 1.0E-10)
+  - at threads -> 3: passed
+    (mean = 1961.08 ms, ci = <1595.53 ms, 2326.62 ms>, significance = 1.0E-10)
+  - at threads -> 4: passed
+    (mean = 1049.01 ms, ci = <903.44 ms, 1194.59 ms>, significance = 1.0E-10)
+  - at threads -> 5: passed
+    (mean = 1049.58 ms, ci = <905.13 ms, 1194.04 ms>, significance = 1.0E-10)
+  - at threads -> 6: passed
+    (mean = 1008.66 ms, ci = <846.85 ms, 1170.48 ms>, significance = 1.0E-10)
+  - at threads -> 7: passed
+    (mean = 929.22 ms, ci = <711.76 ms, 1146.67 ms>, significance = 1.0E-10)
+  - at threads -> 8: passed
+    (mean = 635.08 ms, ci = <532.55 ms, 737.61 ms>, significance = 1.0E-10)
+  - at threads -> 9: passed
+    (mean = 593.50 ms, ci = <491.97 ms, 695.02 ms>, significance = 1.0E-10)
+  - at threads -> 10: passed
+    (mean = 564.54 ms, ci = <485.37 ms, 643.71 ms>, significance = 1.0E-10)
+  - at threads -> 11: passed
+    (mean = 552.73 ms, ci = <467.71 ms, 637.76 ms>, significance = 1.0E-10)
+  - at threads -> 12: passed
+    (mean = 546.93 ms, ci = <460.32 ms, 633.55 ms>, significance = 1.0E-10)
+  - at threads -> 13: passed
+    (mean = 523.68 ms, ci = <436.65 ms, 610.72 ms>, significance = 1.0E-10)
+  - at threads -> 14: passed
+    (mean = 463.77 ms, ci = <374.91 ms, 552.62 ms>, significance = 1.0E-10)
+  - at threads -> 15: passed
+    (mean = 429.94 ms, ci = <388.96 ms, 470.93 ms>, significance = 1.0E-10)
+  - at threads -> 16: passed
+    (mean = 412.38 ms, ci = <372.32 ms, 452.44 ms>, significance = 1.0E-10)
+  - at threads -> 17: passed
+    (mean = 410.77 ms, ci = <363.07 ms, 458.47 ms>, significance = 1.0E-10)
+  - at threads -> 18: passed
+    (mean = 396.60 ms, ci = <356.19 ms, 437.00 ms>, significance = 1.0E-10)
+  - at threads -> 19: passed
+    (mean = 383.09 ms, ci = <362.34 ms, 403.85 ms>, significance = 1.0E-10)
+  - at threads -> 20: passed
+    (mean = 372.83 ms, ci = <354.03 ms, 391.64 ms>, significance = 1.0E-10)

@@ -11,3 +11,12 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+
+# Project specific
+*.testdata
+*.haskell
+*.expected
+*.actual
+ssh.sh
+upload.sh
+batch.sh

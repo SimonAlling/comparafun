@@ -1,0 +1,22 @@
+stack exec -- comparafun fib batch +RTS -H1G -A100M -N4 -RTS --output fib-4.html
+Detected 24 hardware threads
+Using 4 HECs
+********* Benchmark suite *********
+  depth:       30
+  width:       1000
+***********************************
+
+benchmarking fib/width = 1000/seq
+time                 5.180 s    (5.133 s .. 5.279 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 5.146 s    (5.136 s .. 5.164 s)
+std dev              18.08 ms   (952.3 μs .. 21.61 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking fib/width = 1000/par
+time                 1.393 s    (1.368 s .. 1.422 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.380 s    (1.371 s .. 1.386 s)
+std dev              8.288 ms   (3.197 ms .. 11.36 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
