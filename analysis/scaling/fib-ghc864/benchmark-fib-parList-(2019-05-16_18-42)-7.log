@@ -1,0 +1,12 @@
+stack exec -- comparafun fib 30 1000 0 +RTS -H1G -A100M -N7 -RTS --output fib-parList-7.html
+Detected 24 hardware threads
+Using 7 HECs
+depth = 30
+width = 1000
+
+stack exec -- comparafun fib 30 1000 0 +RTS -H1G -A100M -N7 -RTS --output fib-parList-7.html
+Detected 24 hardware threads
+Using 7 HECs
+depth = 30
+width = 1000
+
