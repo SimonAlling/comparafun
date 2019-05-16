@@ -26,3 +26,8 @@ Main
 
 # Only useful for me:
 ssh.sh
+upload.sh
+*.testdata
+*.haskell
+*.eventlog
+*.html

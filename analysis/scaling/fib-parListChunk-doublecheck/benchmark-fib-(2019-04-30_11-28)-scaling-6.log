@@ -1,0 +1,15 @@
+stack exec -- comparafun fib batch +RTS -H1G -A100M -N6 -RTS --output fib-6.html
+Detected 24 hardware threads
+Using 6 HECs
+********* Benchmark suite *********
+  depth:       30
+  width:       1000
+***********************************
+
+benchmarking fib/width = 1000/parChunk
+time                 1.098 s    (1.082 s .. 1.116 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.096 s    (1.092 s .. 1.098 s)
+std dev              3.934 ms   (723.9 μs .. 4.905 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
