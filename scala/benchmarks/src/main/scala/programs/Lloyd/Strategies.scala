@@ -14,8 +14,6 @@ import scala.concurrent.forkjoin.ForkJoinPool
 
 package object Strategies {
 
-def withThreads(t: Int) = new ForkJoinTaskSupport(new ForkJoinPool(t))
-
 // Semigroup instance
 def combineVectors(a: Vector[PointSum], b: Vector[PointSum]): Vector[PointSum] = {
   a.zip(b).map((combinePointSums _).tupled)
@@ -27,8 +25,7 @@ def step(
   pointChunks: Vector[Vector[Point]],
 ): Vector[Cluster] = {
   val pointChunks_par = pointChunks.par
-  pointChunks_par.tasksupport = withThreads(pointChunks_par.length)
-  val assigned = pointChunks.par.map(assignPS(metric, clusters, _))
+  val assigned = pointChunks_par.map(assignPS(metric, clusters, _))
   // We emulate the semantics of foldr1 here because a regular fold crashes:
   makeNewClusters(assigned.tail.fold(assigned.head)(combineVectors))
 }

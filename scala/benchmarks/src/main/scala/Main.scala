@@ -8,7 +8,7 @@ import argonaut._, Argonaut._
 import scala.io.Source
 import java.io.{FileNotFoundException, IOException}
 
-import fib.{fibonaccis_par, fibonaccis_seq}
+import fib.{fibonaccis_par, fibonaccis_parChunk, fibonaccis_seq}
 import KMeansStuff.{runKMeans}
 import Lloyd.Sequential.{Point}
 
@@ -86,25 +86,30 @@ extends App {
   }
 }
 
-object KMeansBenchmark
+object kmeansBenchmark
 extends Bench.OfflineReport {
-  val n = 100
-  val k = 2
+  val n = 20000
+  val k = 200
   val seed = 3
-  val TODO_PARALLELISM = 2
+  val maxThreads: Int = 20
   val fileContent = File.read(Config.filename(n, k, seed)(Config.EXT_TESTDATA))
   val parsedTestData: List[List[Double]] = fileContent.decodeOption[List[List[Double]]].getOrElse(Nil)
   val vectorizedTestData = parsedTestData.map(_.toVector).toVector
   val unit = Gen.unit("dummy")
+  val threads = Gen.range("threads")(2, maxThreads, 1)
   measure method "kmeans_seq" in {
     using (unit) in { _ => runKMeans(vectorizedTestData, k, 1) }
   }
   measure method "kmeans_par" in {
-    using (unit) in { _ => runKMeans(vectorizedTestData, k, TODO_PARALLELISM) }
+    using (threads) in {
+      t => {
+        runKMeans(vectorizedTestData, k, t)
+      }
+    }
   }
 }
 
-object FibBenchmark
+object fibBenchmark
 extends Bench.OfflineReport {
   val width: Int = 1000
   val depth: Int = 30
@@ -115,6 +120,7 @@ extends Bench.OfflineReport {
 
   val xs = List.tabulate(width)(_ => depth)
   val xs_par = xs.par
+  val xs_vec = xs.toVector
 
   def withThreads(t: Int) = new ForkJoinTaskSupport(new ForkJoinPool(t))
 
@@ -127,6 +133,14 @@ extends Bench.OfflineReport {
       t => {
         xs_par.tasksupport = withThreads(t)
         fibonaccis_par(xs_par)
+      }
+    }
+  }
+
+  measure method "fibonaccis_parChunk" in {
+    using (threads) in {
+      t => {
+        fibonaccis_parChunk(t, xs_vec)
       }
     }
   }
