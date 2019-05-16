@@ -1,0 +1,13 @@
+stack exec -- comparafun fib 30 1000 0 +RTS -H1G -A100M -N16 -RTS --output fib-parList-16.html
+Detected 24 hardware threads
+Using 16 HECs
+depth = 30
+width = 1000
+
+benchmarking fib_parList
+time                 547.8 ms   (541.6 ms .. 551.5 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 551.8 ms   (549.8 ms .. 553.1 ms)
+std dev              2.149 ms   (53.32 μs .. 3.038 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
