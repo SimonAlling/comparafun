@@ -79,7 +79,9 @@ benchFibWith params@(parallelism, depth, width) =
   where
     (name, f) = case parallelism of
       Sequential -> ("fib_seq", fibonaccis_seq)
-      Parallel chunks -> ("fib_parChunk", fibonaccis_parChunk chunks)
+      Parallel chunks -> case chunks of
+        0 -> ("fib_parList", fibonaccis_par)
+        c -> ("fib_parListChunk", fibonaccis_parChunk c)
 
 createKMeansBatch :: Threads -> KMeansConfiguration -> Benchmark
 createKMeansBatch threads config = bgroup "kmeans" $ map withN $ problemSizes config
@@ -131,7 +133,7 @@ main =
       , "stack exec -- comparafun kmeans batch +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun kmeans correctness SIZE K SEED PARTITIONS"
       , "stack exec -- comparafun fib DEPTH WIDTH seq +RTS -H1G -A100M -N4"
-      , "stack exec -- comparafun fib DEPTH WIDTH CHUNK_SIZE +RTS -H1G -A100M -N4"
+      , "stack exec -- comparafun fib DEPTH WIDTH CHUNKS +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun fib batch +RTS -H1G -A100M -N4"
       ]
   in do
