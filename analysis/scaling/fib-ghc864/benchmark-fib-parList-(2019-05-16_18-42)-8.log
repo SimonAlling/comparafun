@@ -1,2 +1,0 @@
-stack exec -- comparafun fib 30 1000 0 +RTS -H1G -A100M -N8 -RTS --output fib-parList-8.html
-stack exec -- comparafun fib 30 1000 0 +RTS -H1G -A100M -N8 -RTS --output fib-parList-8.html

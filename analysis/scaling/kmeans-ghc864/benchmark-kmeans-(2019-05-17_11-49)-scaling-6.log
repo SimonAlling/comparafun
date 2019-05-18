@@ -1,0 +1,15 @@
+stack exec -- comparafun kmeans 20000 200 3 6 +RTS -H1G -A100M -N6 -RTS --output kmeans-6.html
+Detected 24 hardware threads
+Using 6 HECs
+n = 20000
+k = 200
+seed = 3
+partitions = 6
+
+benchmarking kmeans_par
+time                 17.42 s    (17.21 s .. 17.57 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 17.16 s    (16.85 s .. 17.28 s)
+std dev              210.3 ms   (10.72 ms .. 260.4 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
