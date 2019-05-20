@@ -28,15 +28,8 @@ instance Show Node where
   show (Element tagName attrs children) = concat [ "<", tagName, show attrs, ">", "\n", content, "</", tagName, ">" ]
     where content = indent 4 $ unlines $ map show children
 
-data Color = Red | Green | Blue | Purple | Orange | Magenta | Brown | Salmon
+data Color = Red | Green | Blue | Orange | Magenta | Brown | Purple | Salmon
   deriving (Enum, Show)
-
--- instance Show Color where
---   show = \case
---     Red -> "red"
---     Green -> "green"
---     Blue -> "blue"
---     Purple -> "purple"
 
 colors :: [Color]
 colors = enumFrom Red
