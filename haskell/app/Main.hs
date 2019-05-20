@@ -23,6 +23,8 @@ import FibTesting (Width, Depth, FibParameters, FibConfiguration(..), printFibBe
 import Fib (fibonaccis_seq, fibonaccis_par, fibonaccis_parChunk)
 import Algorithms.Lloyd.Sequential (Point(..))
 import Algorithms.Lloyd.Strategies (Partitions(..))
+import qualified Svg as Svg
+import Data.Vector ((!))
 
 deriving instance Generic (Point)
 deriving instance NFData (Point)
@@ -48,11 +50,14 @@ runKMeansWith params@(parallelism, seed, n, k) =
     serializeResult = show . (fmap $ fmap point)
     filename_testdata = KMeansTesting.filename "testdata" params
     filename_expected = KMeansTesting.filename "haskell" params
+    filename_plot = KMeansTesting.filename "svg" params
+    renderConfig = Svg.defaultRenderConfig { Svg.scalingFactor = 4 }
   in do
     putStrLn $ "Writing kmeans test data to "++filename_testdata
     writeFile filename_testdata (serialize testData)
     printKMeansBenchmarkInfo params
     writeFile filename_expected (serializeResult resultSeq)
+    Svg.plotIO filename_plot renderConfig (\(Point p) -> (p ! 0, p ! 1)) resultSeq
     putStrLn $
       if resultSeq == resultPar then "OK"
       else "Parallel and sequential results differ."
