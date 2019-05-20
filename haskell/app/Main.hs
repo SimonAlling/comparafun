@@ -40,6 +40,9 @@ interval = (0, 100)
 dimensions :: Dimensions
 dimensions = 2
 
+renderConfig :: Svg.RenderConfig
+renderConfig = Svg.defaultRenderConfig { Svg.scalingFactor = 4 }
+
 runKMeansWith :: KMeansParameters -> IO ()
 runKMeansWith params@(parallelism, seed, n, k) =
   let
@@ -50,8 +53,7 @@ runKMeansWith params@(parallelism, seed, n, k) =
     serializeResult = show . (fmap $ fmap point)
     filename_testdata = KMeansTesting.filename "testdata" dimensions params
     filename_expected = KMeansTesting.filename "haskell" dimensions params
-    filename_plot = KMeansTesting.filename "svg" dimensions params
-    renderConfig = Svg.defaultRenderConfig { Svg.scalingFactor = 4 }
+    filename_plot = KMeansTesting.filename "haskell.svg" dimensions params
   in do
     putStrLn $ "Writing kmeans test data to "++filename_testdata
     writeFile filename_testdata (serialize testData)
@@ -61,6 +63,15 @@ runKMeansWith params@(parallelism, seed, n, k) =
     putStrLn $
       if resultSeq == resultPar then "OK"
       else "Parallel and sequential results differ."
+
+plotScalaOutput :: String -> IO ()
+plotScalaOutput filename = do
+  scalaOutput <- parseScalaOutput <$> readFile filename
+  let filename_plot = "kmeans-scala.svg"
+  Svg.plotIO filename_plot renderConfig (\p -> (p !! 0, p !! 1)) scalaOutput
+  where
+    parseScalaOutput :: String -> [[[Double]]]
+    parseScalaOutput = read
 
 benchKMeansWith :: KMeansParameters -> IO ()
 benchKMeansWith params@(parallelism, seed, n, k) =
