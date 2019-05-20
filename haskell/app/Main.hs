@@ -34,11 +34,11 @@ data UserRequest
   | KMeansCorrectness KMeansParameters
   | Fib (Maybe FibParameters)
 
-interval :: Interval Double
+interval :: Interval Int
 interval = (0, 100)
 
 dimensions :: Dimensions
-dimensions = 3
+dimensions = 2
 
 runKMeansWith :: KMeansParameters -> IO ()
 runKMeansWith params@(parallelism, seed, n, k) =
@@ -48,9 +48,9 @@ runKMeansWith params@(parallelism, seed, n, k) =
     resultPar = runKmeans parallelism testData k
     serialize = show . fmap point
     serializeResult = show . (fmap $ fmap point)
-    filename_testdata = KMeansTesting.filename "testdata" params
-    filename_expected = KMeansTesting.filename "haskell" params
-    filename_plot = KMeansTesting.filename "svg" params
+    filename_testdata = KMeansTesting.filename "testdata" dimensions params
+    filename_expected = KMeansTesting.filename "haskell" dimensions params
+    filename_plot = KMeansTesting.filename "svg" dimensions params
     renderConfig = Svg.defaultRenderConfig { Svg.scalingFactor = 4 }
   in do
     putStrLn $ "Writing kmeans test data to "++filename_testdata

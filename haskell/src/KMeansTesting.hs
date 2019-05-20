@@ -5,7 +5,7 @@ module KMeansTesting where
 import Prelude hiding ((>>))
 import Data.List (intersperse, intercalate)
 import KMeansStuff (K, runKmeans)
-import Testing (Parallelism(..), SuiteConfig(..), Seed, Size, Threads)
+import Testing (Parallelism(..), SuiteConfig(..), Seed, Size, Threads, Dimensions)
 import Algorithms.Lloyd.Strategies (Partitions(..))
 import Util (compose2)
 
@@ -52,5 +52,5 @@ showKMeansConfiguration ps = unlines $ do
 showItems :: Show a => [a] -> String
 showItems = concat . intersperse ", " . map show
 
-filename :: String -> KMeansParameters -> String
-filename extension (parallelism, seed, n, k) = intercalate "-" [ "kmeans", "correctness", show n, show k, show seed ] ++ '.':extension
+filename :: String -> Dimensions -> KMeansParameters -> String
+filename extension d (parallelism, seed, n, k) = intercalate "-" [ "kmeans", "correctness", show d ++ "D", show n, show k, show seed ] ++ '.':extension
