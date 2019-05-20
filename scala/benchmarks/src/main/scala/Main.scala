@@ -23,9 +23,9 @@ object Config {
 
 object KMeansTools {
   def serializeResult(result: Vector[Vector[Point]]): String = {
-    val showPoint = (point: Point) => point.mkString(", ")
-    val showCluster = (cluster: Vector[Point]) => cluster.map(showPoint).mkString("\n")
-    result.map(showCluster).mkString("\n\n")
+    val showPoint = (point: Point) => "[" + point.mkString(", ") + "]"
+    val showCluster = (cluster: Vector[Point]) => "[" + cluster.map(showPoint).mkString(",\n") + "]"
+    "[" + result.map(showCluster).mkString(",\n\n") + "]"
   }
 }
 
