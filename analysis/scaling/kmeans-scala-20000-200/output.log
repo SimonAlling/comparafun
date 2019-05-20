@@ -1,0 +1,48 @@
+:::Summary of regression test results - Accepter():::                                                                                                                                                              
+Test group: kmeans_seq                                                                                                                                                                                             
+- kmeans_seq.Test-0 measurements:                                                                                                                                                                                    - at dummy -> (): passed
+    (mean = 3234.54 ms, ci = <2917.46 ms, 3551.62 ms>, significance = 1.0E-10)
+
+Test group: kmeans_par
+- kmeans_par.Test-1 measurements:
+  - at threads -> 2: passed
+    (mean = 4444.56 ms, ci = <4012.54 ms, 4876.58 ms>, significance = 1.0E-10)
+  - at threads -> 3: passed
+    (mean = 3828.26 ms, ci = <3475.65 ms, 4180.86 ms>, significance = 1.0E-10)
+  - at threads -> 4: passed
+    (mean = 3497.33 ms, ci = <3155.75 ms, 3838.90 ms>, significance = 1.0E-10)
+  - at threads -> 5: passed
+    (mean = 3350.31 ms, ci = <3017.21 ms, 3683.41 ms>, significance = 1.0E-10)
+  - at threads -> 6: passed
+    (mean = 3286.36 ms, ci = <2932.67 ms, 3640.04 ms>, significance = 1.0E-10)
+  - at threads -> 7: passed
+    (mean = 3193.25 ms, ci = <2790.57 ms, 3595.93 ms>, significance = 1.0E-10)
+  - at threads -> 8: passed
+    (mean = 3162.96 ms, ci = <2761.25 ms, 3564.67 ms>, significance = 1.0E-10)
+  - at threads -> 9: passed
+    (mean = 3158.48 ms, ci = <2766.74 ms, 3550.23 ms>, significance = 1.0E-10)
+  - at threads -> 10: passed
+    (mean = 3135.34 ms, ci = <2726.11 ms, 3544.56 ms>, significance = 1.0E-10)
+  - at threads -> 11: passed
+    (mean = 3140.83 ms, ci = <2775.14 ms, 3506.53 ms>, significance = 1.0E-10)
+  - at threads -> 12: passed
+    (mean = 3112.74 ms, ci = <2755.57 ms, 3469.91 ms>, significance = 1.0E-10)
+  - at threads -> 13: passed
+    (mean = 3088.62 ms, ci = <2758.43 ms, 3418.81 ms>, significance = 1.0E-10)
+  - at threads -> 14: passed
+    (mean = 3061.55 ms, ci = <2740.37 ms, 3382.73 ms>, significance = 1.0E-10)
+  - at threads -> 15: passed
+    (mean = 3024.28 ms, ci = <2708.94 ms, 3339.63 ms>, significance = 1.0E-10)
+  - at threads -> 16: passed
+    (mean = 2993.55 ms, ci = <2692.43 ms, 3294.66 ms>, significance = 1.0E-10)
+  - at threads -> 17: passed
+    (mean = 2956.40 ms, ci = <2651.18 ms, 3261.62 ms>, significance = 1.0E-10)
+  - at threads -> 18: passed
+    (mean = 2930.74 ms, ci = <2625.50 ms, 3235.97 ms>, significance = 1.0E-10)
+  - at threads -> 19: passed
+    (mean = 2909.82 ms, ci = <2621.13 ms, 3198.50 ms>, significance = 1.0E-10)
+  - at threads -> 20: passed
+    (mean = 2903.80 ms, ci = <2623.20 ms, 3184.40 ms>, significance = 1.0E-10)
+
+[success] Total time: 7269 s, completed May 17, 2019 11:09:42 AM
+Summary: 2 tests passed, 0 tests failed.
