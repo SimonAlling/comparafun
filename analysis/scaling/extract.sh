@@ -12,6 +12,4 @@ if [ ! -e $EXTRACT ]; then
 	cd -
 fi
 
-for i in $(ls -1v *.log); do
-	cat "$i" | $EXTRACT_EXE
-done
+cat $(ls -1v *.log) | $EXTRACT_EXE $1
