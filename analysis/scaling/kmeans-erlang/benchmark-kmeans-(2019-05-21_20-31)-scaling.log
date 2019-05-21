@@ -1,0 +1,63 @@
+n: 20000
+k: 200
+Repetitions: 9
+
+Threads: 1
+Mean: 87180 ms
+
+Threads: 2
+Mean: 43874 ms
+
+Threads: 3
+Mean: 30657 ms
+
+Threads: 4
+Mean: 23502 ms
+
+Threads: 5
+Mean: 19746 ms
+
+Threads: 6
+Mean: 16437 ms
+
+Threads: 7
+Mean: 14147 ms
+
+Threads: 8
+Mean: 12675 ms
+
+Threads: 9
+Mean: 11881 ms
+
+Threads: 10
+Mean: 11374 ms
+
+Threads: 11
+Mean: 10183 ms
+
+Threads: 12
+Mean: 12342 ms
+
+Threads: 13
+Mean: 15131 ms
+
+Threads: 14
+Mean: 14551 ms
+
+Threads: 15
+Mean: 13750 ms
+
+Threads: 16
+Mean: 13161 ms
+
+Threads: 17
+Mean: 12497 ms
+
+Threads: 18
+Mean: 12206 ms
+
+Threads: 19
+Mean: 11748 ms
+
+Threads: 20
+Mean: 11288 ms

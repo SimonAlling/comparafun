@@ -1,0 +1,63 @@
+Width: 1000
+Depth: 30
+Repetitions: 9
+
+Threads: 1
+Mean: 26158 ms
+
+Threads: 2
+Mean: 13334 ms
+
+Threads: 3
+Mean: 9269 ms
+
+Threads: 4
+Mean: 7055 ms
+
+Threads: 5
+Mean: 5750 ms
+
+Threads: 6
+Mean: 4790 ms
+
+Threads: 7
+Mean: 4113 ms
+
+Threads: 8
+Mean: 3618 ms
+
+Threads: 9
+Mean: 3298 ms
+
+Threads: 10
+Mean: 2965 ms
+
+Threads: 11
+Mean: 2696 ms
+
+Threads: 12
+Mean: 2483 ms
+
+Threads: 13
+Mean: 2661 ms
+
+Threads: 14
+Mean: 2420 ms
+
+Threads: 15
+Mean: 2498 ms
+
+Threads: 16
+Mean: 2407 ms
+
+Threads: 17
+Mean: 2320 ms
+
+Threads: 18
+Mean: 2322 ms
+
+Threads: 19
+Mean: 2207 ms
+
+Threads: 20
+Mean: 2127 ms
