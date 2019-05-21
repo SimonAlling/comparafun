@@ -25,6 +25,7 @@ import Algorithms.Lloyd.Sequential (Point(..))
 import Algorithms.Lloyd.Strategies (Partitions(..))
 import qualified Svg as Svg
 import Data.Vector ((!))
+import Data.List (intercalate)
 
 deriving instance Generic (Point)
 deriving instance NFData (Point)
@@ -38,7 +39,7 @@ interval :: Interval Int
 interval = (0, 100)
 
 dimensions :: Dimensions
-dimensions = 2
+dimensions = 3
 
 renderConfig :: Svg.RenderConfig
 renderConfig = Svg.defaultRenderConfig { Svg.scalingFactor = 4 }
@@ -72,6 +73,18 @@ plotScalaOutput filename = do
   where
     parseScalaOutput :: String -> [[[Double]]]
     parseScalaOutput = read
+
+createErlangTestdata :: Seed -> Int -> IO ()
+createErlangTestdata seed n =
+  let
+    testData = generateKMeansData seed interval dimensions n
+    filename_testdata = "kmeans-erlang.testdata"
+    toList = foldr (:) []
+    showErlangPoint = ('{' :) . (++ "}.") . intercalate "," . map show . toList . point
+    serialize = unlines . map showErlangPoint . toList
+  in do
+    putStrLn $ "Writing kmeans test data to "++filename_testdata
+    writeFile filename_testdata (serialize testData)
 
 benchKMeansWith :: KMeansParameters -> IO ()
 benchKMeansWith params@(parallelism, seed, n, k) =

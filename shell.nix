@@ -33,5 +33,8 @@ stdenv.mkDerivation {
 
     # Manticore
     manticore
+
+    # Erlang
+    erlangR21
   ];
 }

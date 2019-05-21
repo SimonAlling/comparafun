@@ -22,6 +22,9 @@ timeRegexHaskell = "time\\s+(\\d+(?:\\.\\d+)?) ([m]?s)"
 timeRegexScala :: Regex
 timeRegexScala = "mean = (\\d+(?:\\.\\d+)?) ([m]?s)"
 
+timeRegexErlang :: Regex
+timeRegexErlang = "Mean: (\\d+(?:\\.\\d+)?) ([m]?s)"
+
 group_number, group_unit :: Int
 group_number = 1
 group_unit   = 2
@@ -54,7 +57,7 @@ transform :: Regex -> String -> String
 transform regex = unlines . filter ((>0) . length) . map (maybe "" show . processLine regex) . lines
 
 languages :: [(String, Regex)]
-languages = [("haskell", timeRegexHaskell), ("scala", timeRegexScala)]
+languages = [("haskell", timeRegexHaskell), ("scala", timeRegexScala), ("erlang", timeRegexErlang)]
 
 main :: IO ()
 main = do
