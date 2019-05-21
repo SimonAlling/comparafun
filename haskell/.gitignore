@@ -31,3 +31,4 @@ upload.sh
 *.haskell
 *.eventlog
 *.html
+target

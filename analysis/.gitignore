@@ -1,2 +1,5 @@
 node_modules/
 dist/
+*.hi
+*.o
+scaling/Extract
