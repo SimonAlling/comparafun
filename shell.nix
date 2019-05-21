@@ -14,16 +14,14 @@ stdenv.mkDerivation {
         safe
         monad-parallel
         process
+        regexpr
 
         # Test suite
         temporary
         criterion
       ]
     )))
-    gnumake
     hasklig
-    haskellPackages.cabal-install
-    cabal2nix
     stack
 
     # Scala
