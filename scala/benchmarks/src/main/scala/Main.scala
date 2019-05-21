@@ -41,7 +41,7 @@ extends App {
   val fileContent = File.read(testDataFile)
   val parsedTestData: List[List[Double]] = fileContent.decodeOption[List[List[Double]]].getOrElse(Nil)
   val vectorizedTestData = parsedTestData.map(_.toVector).toVector
-  // // Expected result
+  // Expected result
   val fileContentHaskell = File.read(filename(Config.EXT_HASKELL))
   val parsedHaskell: List[List[List[Double]]] = fileContentHaskell.decodeOption[List[List[List[Double]]]].getOrElse(Nil)
   val vectorizedExpected = parsedHaskell.map(_.map(_.toVector).toVector).toVector

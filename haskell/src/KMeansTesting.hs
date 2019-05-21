@@ -25,7 +25,7 @@ instance SuiteConfig KMeansConfiguration where
 
 defaultKMeansConfig :: KMeansConfiguration
 defaultKMeansConfig = KMeansConfiguration
-  { ns = [10000]
+  { ns = [20000]
   , ks = [200]
   , seeds = [3]
   , parts = [ flip const ]
