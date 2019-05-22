@@ -4,8 +4,8 @@ readonly now=$(date +"%Y-%m-%d_%H-%M")
 
 stack build
 
-readonly N=10000
-readonly K=100
+readonly N=20000
+readonly K=200
 readonly SEED=3
 
 i=1
