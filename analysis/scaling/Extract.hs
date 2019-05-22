@@ -23,7 +23,7 @@ timeRegexScala :: Regex
 timeRegexScala = "mean = (\\d+(?:\\.\\d+)?) ([m]?s)"
 
 timeRegexErlang :: Regex
-timeRegexErlang = "Mean: (\\d+(?:\\.\\d+)?) ([m]?s)"
+timeRegexErlang = "Median: (\\d+(?:\\.\\d+)?) ([m]?s)"
 
 group_number, group_unit :: Int
 group_number = 1
