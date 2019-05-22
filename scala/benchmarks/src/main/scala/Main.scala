@@ -92,7 +92,7 @@ extends Bench.OfflineReport {
   val n = 20000
   val k = 200
   val seed = 3
-  val maxThreads: Int = 20
+  val maxThreads: Int = 24
   val fileContent = File.read(Config.filename(n, k, seed)(Config.EXT_TESTDATA))
   val parsedTestData: List[List[Double]] = fileContent.decodeOption[List[List[Double]]].getOrElse(Nil)
   val vectorizedTestData = parsedTestData.map(_.toVector).toVector
@@ -114,7 +114,7 @@ object fibBenchmark
 extends Bench.OfflineReport {
   val width: Int = 1000
   val depth: Int = 30
-  val maxThreads: Int = 20
+  val maxThreads: Int = 24
 
   val unit = Gen.unit("dummy")
   val threads = Gen.range("threads")(1, maxThreads, 1)

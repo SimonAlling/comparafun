@@ -14,6 +14,6 @@ echo "n: $N" | $collect
 echo "k: $K" | $collect
 echo "Repetitions: $REPETITIONS" | $collect
 
-for i in {1..20}; do
+for i in {1..24}; do
 	erl +S "$i:$i" -noinput -run main kmeansBenchmark $N $K $REPETITIONS | $collect
 done

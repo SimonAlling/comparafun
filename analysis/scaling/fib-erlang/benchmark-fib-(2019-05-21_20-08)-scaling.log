@@ -61,3 +61,15 @@ Mean: 2207 ms
 
 Threads: 20
 Mean: 2127 ms
+
+Threads: 21
+Mean: 2106 ms
+
+Threads: 22
+Mean: 2071 ms
+
+Threads: 23
+Mean: 2042 ms
+
+Threads: 24
+Mean: 2014 ms
