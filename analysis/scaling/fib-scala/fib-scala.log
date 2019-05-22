@@ -1,0 +1,106 @@
+:::Summary of regression test results - Accepter():::
+Test group: fibonaccis_seq
+- fibonaccis_seq.Test-0 measurements:
+  - at dummy -> (): passed
+    (mean = 3588.58 ms, ci = <3576.20 ms, 3600.96 ms>, significance = 1.0E-10)
+
+Test group: fibonaccis_par
+- fibonaccis_par.Test-1 measurements:
+  - at threads -> 2: passed
+    (mean = 1819.44 ms, ci = <1809.04 ms, 1829.84 ms>, significance = 1.0E-10)
+  - at threads -> 3: passed
+    (mean = 1790.84 ms, ci = <1641.88 ms, 1939.79 ms>, significance = 1.0E-10)
+  - at threads -> 4: passed
+    (mean = 953.40 ms, ci = <944.61 ms, 962.20 ms>, significance = 1.0E-10)
+  - at threads -> 5: passed
+    (mean = 952.43 ms, ci = <948.47 ms, 956.38 ms>, significance = 1.0E-10)
+  - at threads -> 6: passed
+    (mean = 925.21 ms, ci = <860.78 ms, 989.65 ms>, significance = 1.0E-10)
+  - at threads -> 7: passed
+    (mean = 836.38 ms, ci = <706.55 ms, 966.21 ms>, significance = 1.0E-10)
+  - at threads -> 8: passed
+    (mean = 576.63 ms, ci = <512.87 ms, 640.39 ms>, significance = 1.0E-10)
+  - at threads -> 9: passed
+    (mean = 542.20 ms, ci = <477.88 ms, 606.51 ms>, significance = 1.0E-10)
+  - at threads -> 10: passed
+    (mean = 506.66 ms, ci = <474.76 ms, 538.56 ms>, significance = 1.0E-10)
+  - at threads -> 11: passed
+    (mean = 505.45 ms, ci = <477.24 ms, 533.66 ms>, significance = 1.0E-10)
+  - at threads -> 12: passed
+    (mean = 493.09 ms, ci = <472.90 ms, 513.28 ms>, significance = 1.0E-10)
+  - at threads -> 13: passed
+    (mean = 482.87 ms, ci = <442.45 ms, 523.29 ms>, significance = 1.0E-10)
+  - at threads -> 14: passed
+    (mean = 457.48 ms, ci = <402.96 ms, 512.00 ms>, significance = 1.0E-10)
+  - at threads -> 15: passed
+    (mean = 408.39 ms, ci = <368.27 ms, 448.52 ms>, significance = 1.0E-10)
+  - at threads -> 16: passed
+    (mean = 386.79 ms, ci = <371.86 ms, 401.71 ms>, significance = 1.0E-10)
+  - at threads -> 17: passed
+    (mean = 401.83 ms, ci = <356.82 ms, 446.84 ms>, significance = 1.0E-10)
+  - at threads -> 18: passed
+    (mean = 383.72 ms, ci = <368.19 ms, 399.25 ms>, significance = 1.0E-10)
+  - at threads -> 19: passed
+    (mean = 373.00 ms, ci = <357.71 ms, 388.28 ms>, significance = 1.0E-10)
+  - at threads -> 20: passed
+    (mean = 366.71 ms, ci = <351.69 ms, 381.73 ms>, significance = 1.0E-10)
+  - at threads -> 21: passed
+    (mean = 363.94 ms, ci = <345.57 ms, 382.32 ms>, significance = 1.0E-10)
+  - at threads -> 22: passed
+    (mean = 363.88 ms, ci = <345.95 ms, 381.82 ms>, significance = 1.0E-10)
+  - at threads -> 23: passed
+    (mean = 361.43 ms, ci = <338.17 ms, 384.69 ms>, significance = 1.0E-10)
+  - at threads -> 24: passed
+    (mean = 349.59 ms, ci = <343.75 ms, 355.43 ms>, significance = 1.0E-10)
+
+Test group: fibonaccis_parChunk
+- fibonaccis_parChunk.Test-2 measurements:
+  - at threads -> 2: passed
+    (mean = 1886.89 ms, ci = <1702.19 ms, 2071.58 ms>, significance = 1.0E-10)
+  - at threads -> 3: passed
+    (mean = 1300.52 ms, ci = <1170.62 ms, 1430.43 ms>, significance = 1.0E-10)
+  - at threads -> 4: passed
+    (mean = 982.87 ms, ci = <889.53 ms, 1076.21 ms>, significance = 1.0E-10)
+  - at threads -> 5: passed
+    (mean = 799.21 ms, ci = <718.49 ms, 879.93 ms>, significance = 1.0E-10)
+  - at threads -> 6: passed
+    (mean = 679.76 ms, ci = <611.95 ms, 747.57 ms>, significance = 1.0E-10)
+  - at threads -> 7: passed
+    (mean = 631.85 ms, ci = <540.17 ms, 723.53 ms>, significance = 1.0E-10)
+  - at threads -> 8: passed
+    (mean = 578.56 ms, ci = <475.18 ms, 681.95 ms>, significance = 1.0E-10)
+  - at threads -> 9: passed
+    (mean = 578.36 ms, ci = <461.06 ms, 695.65 ms>, significance = 1.0E-10)
+  - at threads -> 10: passed
+    (mean = 537.38 ms, ci = <436.51 ms, 638.24 ms>, significance = 1.0E-10)
+  - at threads -> 11: passed
+    (mean = 525.97 ms, ci = <444.58 ms, 607.37 ms>, significance = 1.0E-10)
+  - at threads -> 12: passed
+    (mean = 506.01 ms, ci = <459.24 ms, 552.77 ms>, significance = 1.0E-10)
+  - at threads -> 13: passed
+    (mean = 473.75 ms, ci = <443.52 ms, 503.99 ms>, significance = 1.0E-10)
+  - at threads -> 14: passed
+    (mean = 446.93 ms, ci = <427.11 ms, 466.75 ms>, significance = 1.0E-10)
+  - at threads -> 15: passed
+    (mean = 428.28 ms, ci = <413.67 ms, 442.89 ms>, significance = 1.0E-10)
+  - at threads -> 16: passed
+    (mean = 407.95 ms, ci = <392.37 ms, 423.53 ms>, significance = 1.0E-10)
+  - at threads -> 17: passed
+    (mean = 396.42 ms, ci = <367.50 ms, 425.35 ms>, significance = 1.0E-10)
+  - at threads -> 18: passed
+    (mean = 371.88 ms, ci = <354.07 ms, 389.68 ms>, significance = 1.0E-10)
+  - at threads -> 19: passed
+    (mean = 359.68 ms, ci = <337.27 ms, 382.10 ms>, significance = 1.0E-10)
+  - at threads -> 20: passed
+    (mean = 331.01 ms, ci = <327.26 ms, 334.76 ms>, significance = 1.0E-10)
+  - at threads -> 21: passed
+    (mean = 343.64 ms, ci = <321.21 ms, 366.07 ms>, significance = 1.0E-10)
+  - at threads -> 22: passed
+    (mean = 327.29 ms, ci = <311.54 ms, 343.04 ms>, significance = 1.0E-10)
+  - at threads -> 23: passed
+    (mean = 323.52 ms, ci = <307.44 ms, 339.60 ms>, significance = 1.0E-10)
+  - at threads -> 24: passed
+    (mean = 341.13 ms, ci = <321.54 ms, 360.72 ms>, significance = 1.0E-10)
+
+[success] Total time: 2094 s, completed May 22, 2019 8:18:26 PM
+Summary: 3 tests passed, 0 tests failed.
