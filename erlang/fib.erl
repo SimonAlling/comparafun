@@ -11,21 +11,22 @@ fibonaccis_par(Xs) -> pmap(fun(X) -> fib(X) end, Xs).
 
 pmap(F, Xs) -> do
   , Parent = self()
-  , OneMinute = 60000
-  , Running = [
-      spawn_monitor(fun() -> Parent ! {self(), F(X)} end)
+  , Timeout = 60000 % milliseconds
+  , Processes =
+      [
+        spawn_monitor(fun() -> Parent ! {self(), F(X)} end)
       ||
-      X <- Xs
-    ]
-  , collect(Running, OneMinute)
+        X <- Xs
+      ]
+  , collect(Processes, Timeout)
   .
 
-collect([], _Timeout) -> [];
+collect([], _) -> [];
 collect([{Pid, MRef} | Next], Timeout) -> do
   , receive dummy -> dummy
-    ; {Pid, Res} -> do
+    ; {Pid, Result} -> do
       , erlang:demonitor(MRef, [flush])
-      , [{ok, Res} | collect(Next, Timeout)]
+      , [{ok, Result} | collect(Next, Timeout)]
     ; {'DOWN', MRef, process, Pid, Reason} -> do
       , [{error, Reason} | collect(Next, Timeout)]
     after Timeout -> do
