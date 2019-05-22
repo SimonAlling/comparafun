@@ -14,6 +14,6 @@ echo "Width: $WIDTH" | $collect
 echo "Depth: $DEPTH" | $collect
 echo "Repetitions: $REPETITIONS" | $collect
 
-for i in {1..20}; do
+for i in {1..24}; do
 	erl +S "$i:$i" -noinput -run main fibBenchmark $WIDTH $DEPTH $REPETITIONS | $collect
 done

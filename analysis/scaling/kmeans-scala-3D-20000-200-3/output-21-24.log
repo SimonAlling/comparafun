@@ -1,0 +1,11 @@
+:::Summary of regression test results - Accepter():::                                                                                       
+Test group: kmeans_par                                                                                                                      - kmeans_par.Test-0 measurements:                                                                                                           
+  - at threads -> 21: passed
+    (mean = 2733.64 ms, ci = <2371.15 ms, 3096.13 ms>, significance = 1.0E-10)
+  - at threads -> 22: passed
+    (mean = 2750.35 ms, ci = <2397.53 ms, 3103.16 ms>, significance = 1.0E-10)
+  - at threads -> 23: passed
+    (mean = 2768.32 ms, ci = <2443.77 ms, 3092.87 ms>, significance = 1.0E-10)
+  - at threads -> 24: passed
+    (mean = 2797.87 ms, ci = <2485.10 ms, 3110.65 ms>, significance = 1.0E-10)
+

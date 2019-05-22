@@ -1,0 +1,26 @@
+:::Summary of regression test results - Accepter():::
+Test group: fibonaccis_par
+- fibonaccis_par.Test-0 measurements:
+  - at threads -> 21: passed
+    (mean = 372.24 ms, ci = <353.22 ms, 391.26 ms>, significance = 1.0E-10)
+  - at threads -> 22: passed
+    (mean = 362.98 ms, ci = <344.89 ms, 381.06 ms>, significance = 1.0E-10)
+  - at threads -> 23: passed
+    (mean = 364.53 ms, ci = <345.60 ms, 383.46 ms>, significance = 1.0E-10)
+  - at threads -> 24: passed
+    (mean = 368.80 ms, ci = <345.75 ms, 391.86 ms>, significance = 1.0E-10)
+
+Test group: fibonaccis_parChunk
+- fibonaccis_parChunk.Test-1 measurements:
+  - at threads -> 21: passed
+    (mean = 360.32 ms, ci = <337.28 ms, 383.35 ms>, significance = 1.0E-10)
+  - at threads -> 22: passed
+    (mean = 337.87 ms, ci = <321.99 ms, 353.75 ms>, significance = 1.0E-10)
+  - at threads -> 23: passed
+    (mean = 333.81 ms, ci = <319.06 ms, 348.57 ms>, significance = 1.0E-10)
+  - at threads -> 24: passed
+    (mean = 346.82 ms, ci = <332.69 ms, 360.94 ms>, significance = 1.0E-10)
+
+[success] Total time: 205 s, completed May 22, 2019 4:52:52 PM
+Summary: 2 tests passed, 0 tests failed.
+

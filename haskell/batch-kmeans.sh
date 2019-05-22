@@ -15,7 +15,7 @@ collect="tee -a $LOG_FILE"
 echo "$cmd" | $collect
 $cmd | $collect
 
-for i in {2..20}
+for i in {2..24}
 do
         cmd="stack exec -- comparafun kmeans $N $K $SEED $i +RTS -H1G -A100M -N$i -RTS --output kmeans-$i.html"
         LOG_FILE="benchmark-kmeans-($now)-scaling-$i.log"
