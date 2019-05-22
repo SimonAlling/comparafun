@@ -13,7 +13,7 @@ import KMeansStuff.{runKMeans}
 import Lloyd.Sequential.{Point}
 
 object Config {
-  val DIMENSIONS = 2
+  val DIMENSIONS = 3
   val filename = (n: Int, k: Int, seed: Int) => (extension: String) => s"kmeans-correctness-${DIMENSIONS}D-$n-$k-$seed.$extension"
   val EXT_TESTDATA = "testdata"
   val EXT_HASKELL = "haskell"
