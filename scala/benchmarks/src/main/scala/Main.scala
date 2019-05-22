@@ -117,7 +117,7 @@ extends Bench.OfflineReport {
   val maxThreads: Int = 24
 
   val unit = Gen.unit("dummy")
-  val threads = Gen.range("threads")(1, maxThreads, 1)
+  val threads = Gen.range("threads")(2, maxThreads, 1)
 
   val xs = List.tabulate(width)(_ => depth)
   val xs_par = xs.par
@@ -126,24 +126,18 @@ extends Bench.OfflineReport {
   def withThreads(t: Int) = new ForkJoinTaskSupport(new ForkJoinPool(t))
 
   measure method "fibonaccis_seq" in {
-    using (unit) in { _ => fibonaccis_seq(xs) }
+    using (unit) in (_ => fibonaccis_seq(xs))
   }
 
   measure method "fibonaccis_par" in {
-    using (threads) in {
-      t => {
-        xs_par.tasksupport = withThreads(t)
-        fibonaccis_par(xs_par)
-      }
-    }
+    using (threads) in (t => {
+      xs_par.tasksupport = withThreads(t)
+      fibonaccis_par(xs_par)
+    })
   }
 
   measure method "fibonaccis_parChunk" in {
-    using (threads) in {
-      t => {
-        fibonaccis_parChunk(t, xs_vec)
-      }
-    }
+    using (threads) in (t => fibonaccis_parChunk(t, xs_vec))
   }
 }
 
