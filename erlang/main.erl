@@ -64,7 +64,7 @@ measureEither(F_seq, F_par, Repetitions, Threads) -> do
   , Time = measure(Repetitions, F)
   , println("")
   , println("Threads: " ++ integer_to_list(Threads))
-  , println("Mean: " ++ integer_to_list(microToMilli(Time)) ++ " ms")
+  , println("Median: " ++ integer_to_list(microToMilli(Time)) ++ " ms")
   .
 
 % Assumes that Repetitions is odd:
