@@ -1,5 +1,11 @@
 -module(main).
--export([fibBenchmark/1, kmeansBenchmark/1]).
+-export(
+  [ fibBenchmark/1
+  , fibBenchmark/3
+  , kmeansBenchmark/1
+  , kmeansBenchmark/3
+  ]
+).
 
 fibBenchmark(Width, Depth, Repetitions) -> do
   , Xs = lists:duplicate(Width, Depth)

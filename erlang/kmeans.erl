@@ -1,9 +1,5 @@
 -module(kmeans).
--compile(export_all).
-
--ifndef(PRINT).
--define(PRINT(Var), io:format("DEBUG: ~p:~p - ~p~n~n ~p~n~n", [?MODULE, ?LINE, ??Var, Var])).
--endif.
+-export([kmeans_seq/3, kmeans_par/4]).
 
 %% A point is a 3-tuple of floats.
 
@@ -138,18 +134,3 @@ chunks(Xs, N) -> do
       , [ Pre | chunks(Suf, N) ]
     end
   .
-
-%% Fold an associative operation over a list, in a balanced way
-%% to reduce rounding errors:
-% fold(Op, Zero, Xs) ->
-%   fold(Op, Zero, Xs, length(Xs)).
-% 
-% fold(_Op, Zero, [], 0) ->
-%   Zero;
-% fold(_Op, _, [X], 1) ->
-%   X;
-% fold(Op, Zero, Xs, N) -> do
-%   , Half = N div 2
-%   , { Pre, Suf } = lists:split(Half, Xs)
-%   , Op(fold(Op, Zero, Pre, Half), fold(Op, Zero, Suf, N-Half))
-%   .
