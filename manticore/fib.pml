@@ -1,10 +1,20 @@
-val width = 1000
-val depth = 30
+fun fib 0 = 0
+  | fib 1 = 1
+  | fib n = fib (n - 2) + fib (n - 1)
 
-fun fib n = if n = 0 then 0 else if n = 1 then 1 else fib (n - 2) + fib (n - 1)
+fun fibonaccis_seq width depth =
+  let
+    val xs = Array.tabulate (width, (fn _ => depth))
+  in
+    Array.map (fn x => fib x) xs
+  end
 
-(*val xs = PArray.fromRope (Rope.tabulateSequential (fn _ => depth) (1, width))
-*)
-val xs = Array.tabulate (width, (fn _ => depth))
+fun fibonaccis_par width depth =
+  let
+    val rope = Rope.tabulateSequential (fn _ => depth) (1, width)
+    val xs = PArray.fromRope rope
+  in
+    PArray.map (fn x => fib x) xs
+  end
 
-val _ = Array.map (fn x => fib x) xs
+val _ = fibonaccis_par 1000 30
