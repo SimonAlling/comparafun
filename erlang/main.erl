@@ -53,8 +53,8 @@ kmeansBenchmark(_) -> printUsage().
 
 printUsage() -> do
   , println("Usage")
-  , println("erl +S 20:20 -noinput -run main fibBenchmark WIDTH DEPTH REPETITIONS")
-  , println("erl +S 20:20 -noinput -run main kmeansBenchmark N K REPETITIONS")
+  , println("erl +S 24:24 -noinput -run main fibBenchmark WIDTH DEPTH REPETITIONS")
+  , println("erl +S 24:24 -noinput -run main kmeansBenchmark N K REPETITIONS")
   .
 
 
