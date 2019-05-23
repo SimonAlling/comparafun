@@ -71,7 +71,7 @@ measureEither(F_seq, F_par, Repetitions, Threads) -> do
 measure(Repetitions, F) -> do
   , TimesAndResults = lists:map(fun(_) -> timer:tc(F) end, lists:seq(1, Repetitions))
   , Times = [ Time || { Time, _ } <- TimesAndResults ]
-  % Arithmetic mean (if Repetitions is odd):
+  % Median (if Repetitions is odd):
   , lists:nth(1 + Repetitions div 2, lists:sort(Times))
   .
 
