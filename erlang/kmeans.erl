@@ -17,12 +17,12 @@ sq(X) ->
 
 %% A cluster is a pair of a cluster-id and a point (centroid)
 
-closest_cluster(Point,Clusters) -> do
+closest_cluster(Point, Clusters) -> do
   , { _, Id } = lists:min([ {distance_sq(Point, C), I} || {I, C} <- Clusters ])
   , Id
   .
 
-assign_points_to_clusters(Points,Clusters) -> do
+assign_points_to_clusters(Points, Clusters) -> do
   , ClosestClusters = [ {closest_cluster(P, Clusters), P} || P <- Points ]
   , [
       { Id, [ P || {Id1, P} <- ClosestClusters, Id1 == Id ] }
@@ -32,7 +32,7 @@ assign_points_to_clusters(Points,Clusters) -> do
   .
 
 cluster_pointsums(Points, Clusters) -> do
-  , ClusterPoints = assign_points_to_clusters(Points,Clusters)
+  , ClusterPoints = assign_points_to_clusters(Points, Clusters)
   , [ {Id, points_to_pointsum(Pts)} || {Id, Pts} <- ClusterPoints ]
   .
 
@@ -42,10 +42,10 @@ add_pointsum({N1, P1}, {N2, P2}) ->
   {N1+N2, add_point(P1, P2)}.
 
 points_to_pointsum(Points) ->
-  add_pointsums([{1,P} || P <- Points]).
+  add_pointsums([ {1, P} || P <- Points] ).
 
 add_pointsums(PointSums) ->
-  lists:foldr(fun add_pointsum/2,{0,{0,0,0}}, PointSums).
+  lists:foldr(fun add_pointsum/2, {0, {0, 0, 0}}, PointSums).
 
 %% At each step, we replace the centroid of each cluster by the
 %% average of the points assigned to it.
@@ -61,10 +61,10 @@ recentre(Points, Clusters) -> do
 
 %% The k-means algorithm
 
-kmeans_seq(0,_,Clusters) ->
+kmeans_seq(0, _, Clusters) ->
   Clusters;
-kmeans_seq(MaxIterations,Points,Clusters) -> do
-  , NewClusters = recentre(Points,Clusters)
+kmeans_seq(MaxIterations, Points, Clusters) -> do
+  , NewClusters = recentre(Points, Clusters)
   , if dummy -> dummy
     ; Clusters == NewClusters -> Clusters
     ; true -> kmeans_seq(MaxIterations-1, Points, NewClusters)
@@ -75,7 +75,7 @@ kmeans_seq(MaxIterations,Points,Clusters) -> do
 
 kmeans_par(MaxIterations, Points, Clusters, NumWorkers) -> do
   , PointsPerWorker = (length(Points)+NumWorkers-1) div NumWorkers
-  , Chunks = chunks(Points,PointsPerWorker)
+  , Chunks = chunks(Points, PointsPerWorker)
   , Workers =
       [
         spawn_link(fun() -> worker(Chunk) end)
