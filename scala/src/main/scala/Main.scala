@@ -20,12 +20,18 @@ object Config {
   val EXT_EXPECTED = "expected"
   val EXT_ACTUAL = "actual"
   val OUTPUT_OK = "OK"
-  def getMaxThreads() = {
-    val content = File.read("../threads.sh")
-    val regex = raw"MAX_THREADS=(\d+)".r.unanchored
+  val REGEX_MAX_THREADS = raw"MAX_THREADS=(\d+)"
+  val REGEX_FIB_WIDTH = raw"WIDTH=(\d+)"
+  val REGEX_FIB_DEPTH = raw"DEPTH=(\d+)"
+  val REGEX_KMEANS_N = raw"KMEANS_N=(\d+)"
+  val REGEX_KMEANS_K = raw"KMEANS_K=(\d+)"
+  val CONFIG_FILE = "../config.sh"
+  def getParam(pattern: String): Int = {
+    val content = File.read(CONFIG_FILE)
+    val regex = pattern.r.unanchored
     content match {
-      case regex(t) => t.toInt
-      case _ => throw new Error("Could not extract MAX_THREADS.")
+      case regex(p) => p.toInt
+      case _ => throw new Error("Could not extract parameter using pattern: "+pattern)
     }
   }
 }
@@ -97,10 +103,10 @@ extends App {
 
 object kmeansBenchmark
 extends Bench.OfflineReport {
-  val n = 20000
-  val k = 200
+  val n = Config.getParam(Config.REGEX_KMEANS_N)
+  val k = Config.getParam(Config.REGEX_KMEANS_K)
   val seed = 3
-  val maxThreads: Int = Config.getMaxThreads()
+  val maxThreads: Int = Config.getParam(Config.REGEX_MAX_THREADS)
   val fileContent = File.read(Config.filename(n, k, seed)(Config.EXT_TESTDATA))
   val parsedTestData: List[List[Double]] = fileContent.decodeOption[List[List[Double]]].getOrElse(Nil)
   val vectorizedTestData = parsedTestData.map(_.toVector).toVector
@@ -120,9 +126,9 @@ extends Bench.OfflineReport {
 
 object fibBenchmark
 extends Bench.OfflineReport {
-  val width: Int = 1000
-  val depth: Int = 30
-  val maxThreads: Int = Config.getMaxThreads()
+  val width: Int = Config.getParam(Config.REGEX_FIB_WIDTH)
+  val depth: Int = Config.getParam(Config.REGEX_FIB_DEPTH)
+  val maxThreads: Int = Config.getParam(Config.REGEX_MAX_THREADS)
 
   val unit = Gen.unit("dummy")
   val threads = Gen.range("threads")(2, maxThreads, 1)

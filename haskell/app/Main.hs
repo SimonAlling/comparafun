@@ -33,6 +33,7 @@ deriving instance NFData (Point)
 data UserRequest
   = KMeans (Maybe KMeansParameters)
   | KMeansCorrectness KMeansParameters
+  | KMeansTestdata KMeansParameters
   | Fib (Maybe FibParameters)
 
 interval :: Interval Int
@@ -73,6 +74,22 @@ plotScalaOutput filename = do
   where
     parseScalaOutput :: String -> [[[Double]]]
     parseScalaOutput = read
+
+createTestdata :: KMeansParameters -> IO ()
+createTestdata (_, seed, n, k) = do
+  createScalaTestdata seed n k
+  createErlangTestdata seed n
+
+createScalaTestdata :: Seed -> Int -> Int -> IO ()
+createScalaTestdata seed n k =
+  let
+    params = (Sequential, seed, n, k)
+    testData = generateKMeansData seed interval dimensions n
+    serialize = show . fmap point
+    filename_testdata = KMeansTesting.filename "testdata" dimensions params
+  in do
+    putStrLn $ "Writing kmeans test data to "++filename_testdata
+    writeFile filename_testdata (serialize testData)
 
 createErlangTestdata :: Seed -> Int -> IO ()
 createErlangTestdata seed n =
@@ -160,6 +177,7 @@ main =
       , "stack exec -- comparafun kmeans SIZE K SEED seq +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun kmeans SIZE K SEED PARTITIONS +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun kmeans batch +RTS -H1G -A100M -N4"
+      , "stack exec -- comparafun kmeans testdata SIZE K SEED"
       , "stack exec -- comparafun kmeans correctness SIZE K SEED PARTITIONS"
       , "stack exec -- comparafun fib DEPTH WIDTH seq +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun fib DEPTH WIDTH CHUNKS +RTS -H1G -A100M -N4"
@@ -174,6 +192,7 @@ main =
     processUserRequest t = \case
       KMeans x -> maybe runBatch_kmeans benchKMeansWith x
       KMeansCorrectness x -> runKMeansWith x
+      KMeansTestdata x -> createTestdata x
       Fib x -> maybe runBatch_fib benchFibWith x
       where
         runBatch_kmeans = runBenchmark info_kmeans $ createKMeansBatch t defaultKMeansConfig
@@ -192,6 +211,11 @@ readMaybeParallelism = \case
 -- NOTE: String literals must be literals to work with pattern matching.
 parseArgs :: [String] -> Maybe UserRequest
 parseArgs = \case
+  ("kmeans" : "testdata" : s_n : s_k : s_seed : _) -> do
+    n <- readMaybeInt s_n
+    k <- readMaybeInt s_k
+    seed <- fromIntegral <$> readMaybeInt s_seed
+    return $ KMeansTestdata (Sequential, seed, n, k)
   ("kmeans" : "correctness" : s_n : s_k : s_seed : s_p : _) -> do
     n <- readMaybeInt s_n
     k <- readMaybeInt s_k
