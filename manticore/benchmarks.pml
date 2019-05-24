@@ -1,1 +1,0 @@
-pval hello = print "Hello"

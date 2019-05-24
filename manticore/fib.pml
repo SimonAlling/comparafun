@@ -17,4 +17,31 @@ fun fibonaccis_par width depth =
     PArray.map (fn x => fib x) xs
   end
 
-val _ = fibonaccis_par 1000 30
+val success = 0
+val failure = 1
+
+fun badUsage () =
+  let
+    val _ = Print.printLn "Usage:"
+    val _ = Print.printLn "./fib WIDTH DEPTH 1        (sequential)"
+    val _ = Print.printLn "./fib WIDTH DEPTH 2        (parallel)"
+  in failure end
+
+fun withParams (w : int) (d : int) (p : int) =
+  case p of
+      1 => let val _ = fibonaccis_seq w d in success end
+    | 2 => let val _ = fibonaccis_par w d in success end
+    | _ => badUsage ()
+
+fun main (width :: depth :: parallelism :: _) =
+      let
+        val w = Int.fromString width
+        val d = Int.fromString depth
+        val p = Int.fromString parallelism
+      in case (w, d, p) of
+          (SOME(w), SOME(d), SOME(p)) => withParams w d p
+        | _ => badUsage ()
+      end
+  | main _ = badUsage ()
+
+val _ = main (CommandLine.arguments ())
