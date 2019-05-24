@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. ../threads.sh
+
 erlc *.erl
 
 readonly now=$(date +"%Y-%m-%d_%H-%M")
@@ -14,6 +16,6 @@ echo "n: $N" | $collect
 echo "k: $K" | $collect
 echo "Repetitions: $REPETITIONS" | $collect
 
-for i in {1..24}; do
+for ((i=1; i<=MAX_THREADS; i++)) do
 	erl +S "$i:$i" -noinput -run main kmeansBenchmark $N $K $REPETITIONS | $collect
 done
