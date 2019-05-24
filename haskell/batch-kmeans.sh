@@ -1,5 +1,7 @@
 ***REMOVED***
 
+. ../threads.sh
+
 readonly now=$(date +"%Y-%m-%d_%H-%M")
 
 stack build
@@ -15,8 +17,7 @@ collect="tee -a $LOG_FILE"
 echo "$cmd" | $collect
 $cmd | $collect
 
-for i in {2..24}
-do
+for ((i=2; i<=MAX_THREADS; i++)); do
         cmd="stack exec -- comparafun kmeans $N $K $SEED $i +RTS -H1G -A100M -N$i -RTS --output kmeans-$i.html"
         LOG_FILE="benchmark-kmeans-($now)-scaling-$i.log"
         collect="tee -a $LOG_FILE"

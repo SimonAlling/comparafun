@@ -20,6 +20,14 @@ object Config {
   val EXT_EXPECTED = "expected"
   val EXT_ACTUAL = "actual"
   val OUTPUT_OK = "OK"
+  def getMaxThreads() = {
+    val content = File.read("../threads.sh")
+    val regex = raw"MAX_THREADS=(\d+)".r.unanchored
+    content match {
+      case regex(t) => t.toInt
+      case _ => throw new Error("Could not extract MAX_THREADS.")
+    }
+  }
 }
 
 object KMeansTools {
@@ -92,7 +100,7 @@ extends Bench.OfflineReport {
   val n = 20000
   val k = 200
   val seed = 3
-  val maxThreads: Int = 24
+  val maxThreads: Int = Config.getMaxThreads()
   val fileContent = File.read(Config.filename(n, k, seed)(Config.EXT_TESTDATA))
   val parsedTestData: List[List[Double]] = fileContent.decodeOption[List[List[Double]]].getOrElse(Nil)
   val vectorizedTestData = parsedTestData.map(_.toVector).toVector
@@ -114,7 +122,7 @@ object fibBenchmark
 extends Bench.OfflineReport {
   val width: Int = 1000
   val depth: Int = 30
-  val maxThreads: Int = 24
+  val maxThreads: Int = Config.getMaxThreads()
 
   val unit = Gen.unit("dummy")
   val threads = Gen.range("threads")(2, maxThreads, 1)
