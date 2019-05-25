@@ -1,0 +1,25 @@
+stack exec -- comparafun fac 1000000 1000 9 +RTS -H1G -A100M -N9 -RTS --output fib-parList-9.html
+Detected 24 hardware threads
+Using 9 HECs
+Usage:
+stack exec -- comparafun kmeans SIZE K SEED seq +RTS -H1G -A100M -N4
+stack exec -- comparafun kmeans SIZE K SEED PARTITIONS +RTS -H1G -A100M -N4
+stack exec -- comparafun kmeans batch +RTS -H1G -A100M -N4
+stack exec -- comparafun kmeans correctness SIZE K SEED PARTITIONS
+stack exec -- comparafun fib DEPTH WIDTH seq +RTS -H1G -A100M -N4
+stack exec -- comparafun fib DEPTH WIDTH CHUNKS +RTS -H1G -A100M -N4
+stack exec -- comparafun fib batch +RTS -H1G -A100M -N4
+
+stack exec -- comparafun fac 1000000 1000 9 +RTS -H1G -A100M -N9 -RTS --output fib-parList-9.html
+Detected 24 hardware threads
+Using 9 HECs
+depth = 1000000
+width = 1000
+
+benchmarking fac_par
+time                 1.662 s    (1.423 s .. 1.884 s)
+                     0.997 R²   (0.990 R² .. 1.000 R²)
+mean                 1.809 s    (1.743 s .. 1.900 s)
+std dev              97.05 ms   (29.77 ms .. 132.3 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
