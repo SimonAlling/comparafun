@@ -15,6 +15,7 @@ echo "Running Haskell benchmarks ..."
 cd haskell
 ./batch-fib.sh
 ./batch-kmeans.sh
+./batch-fac.sh
 cd -
 
 echo
@@ -29,6 +30,7 @@ echo "Running Scala benchmarks ..."
 cd scala
 ./batch.sh fib
 ./batch.sh kmeans
+./batch.sh fac
 cd -
 
 echo
