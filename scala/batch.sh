@@ -2,7 +2,7 @@
 
 . ../config.sh
 
-readonly NAMES=("fib" "kmeans")
+readonly NAMES=("fib" "kmeans" "fac")
 
 readonly name=$1
 

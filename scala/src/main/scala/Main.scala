@@ -9,6 +9,7 @@ import scala.io.Source
 import java.io.{FileNotFoundException, IOException}
 
 import fib.{fibonaccis_par, fibonaccis_parChunk, fibonaccis_seq}
+import fac.{factorials_par, factorials_seq}
 import KMeansStuff.{runKMeans}
 import Lloyd.Sequential.{Point}
 
@@ -21,8 +22,10 @@ object Config {
   val EXT_ACTUAL = "actual"
   val OUTPUT_OK = "OK"
   val REGEX_MAX_THREADS = raw"MAX_THREADS=(\d+)"
-  val REGEX_FIB_WIDTH = raw"WIDTH=(\d+)"
-  val REGEX_FIB_DEPTH = raw"DEPTH=(\d+)"
+  val REGEX_FIB_WIDTH = raw"FIB_WIDTH=(\d+)"
+  val REGEX_FIB_DEPTH = raw"FIB_DEPTH=(\d+)"
+  val REGEX_FAC_WIDTH = raw"FAC_WIDTH=(\d+)"
+  val REGEX_FAC_DEPTH = raw"FAC_DEPTH=(\d+)"
   val REGEX_KMEANS_N = raw"KMEANS_N=(\d+)"
   val REGEX_KMEANS_K = raw"KMEANS_K=(\d+)"
   val CONFIG_FILE = "../config.sh"
@@ -155,6 +158,31 @@ extends Bench.OfflineReport {
   }
 }
 
+object facBenchmark
+extends Bench.OfflineReport {
+  val width: Int = Config.getParam(Config.REGEX_FAC_WIDTH)
+  val depth: Int = Config.getParam(Config.REGEX_FAC_DEPTH)
+  val maxThreads: Int = Config.getParam(Config.REGEX_MAX_THREADS)
+
+  val unit = Gen.unit("dummy")
+  val threads = Gen.range("threads")(2, maxThreads, 1)
+
+  val xs = List.tabulate(width)(_ => depth)
+  val xs_par = xs.par
+
+  def withThreads(t: Int) = new ForkJoinTaskSupport(new ForkJoinPool(t))
+
+  measure method "factorials_seq" in {
+    using (unit) in (_ => factorials_seq(xs))
+  }
+
+  measure method "factorials_par" in {
+    using (threads) in (t => {
+      xs_par.tasksupport = withThreads(t)
+      factorials_par(xs_par)
+    })
+  }
+}
 
 object File {
   def read(filename: String): String = {

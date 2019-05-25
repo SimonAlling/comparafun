@@ -2,9 +2,6 @@
 
 . ../config.sh
 
-FAC_DEPTH=1000000
-FAC_WIDTH=1000
-
 readonly now=$(date +"%Y-%m-%d_%H-%M")
 
 stack build
