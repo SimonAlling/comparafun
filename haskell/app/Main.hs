@@ -21,6 +21,7 @@ import KMeansTesting (KMeansParameters, KMeansConfiguration(..), PartitionsCalcu
 import qualified KMeansTesting
 import FibTesting (Width, Depth, FibParameters, FibConfiguration(..), printFibBenchmarkInfo, showFibConfiguration, defaultFibConfig)
 import Fib (fibonaccis_seq, fibonaccis_par, fibonaccis_parChunk)
+import Fac (factorials_seq, factorials_par)
 import Algorithms.Lloyd.Sequential (Point(..))
 import Algorithms.Lloyd.Strategies (Partitions(..))
 import qualified Svg as Svg
@@ -35,6 +36,7 @@ data UserRequest
   | KMeansCorrectness KMeansParameters
   | KMeansTestdata KMeansParameters
   | Fib (Maybe FibParameters)
+  | Fac FibParameters
 
 interval :: Interval Int
 interval = (0, 100)
@@ -129,6 +131,19 @@ benchFibWith params@(parallelism, depth, width) =
         0 -> ("fib_parList", fibonaccis_par)
         c -> ("fib_parListChunk", fibonaccis_parChunk c)
 
+benchFacWith :: FibParameters -> IO ()
+benchFacWith params@(parallelism, depth, width) =
+  let
+    testData = replicate width depth
+  in do
+    printFibBenchmarkInfo params
+    defaultMain $ pure $ bench name $ nf f testData
+  where
+    (name, f) = case parallelism of
+      Sequential -> ("fac_seq", factorials_seq)
+      Parallel _ -> ("fac_par", factorials_par)
+
+
 createKMeansBatch :: Threads -> KMeansConfiguration -> Benchmark
 createKMeansBatch threads config = bgroup "kmeans" $ map withN $ problemSizes config
   where
@@ -182,6 +197,8 @@ main =
       , "stack exec -- comparafun fib DEPTH WIDTH seq +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun fib DEPTH WIDTH CHUNKS +RTS -H1G -A100M -N4"
       , "stack exec -- comparafun fib batch +RTS -H1G -A100M -N4"
+      , "stack exec -- comparafun fac DEPTH WIDTH seq +RTS -H1G -A100M -N4"
+      , "stack exec -- comparafun fac DEPTH WIDTH 2 +RTS -H1G -A100M -N4"
       ]
   in do
     printSystemInfo
@@ -194,6 +211,7 @@ main =
       KMeansCorrectness x -> runKMeansWith x
       KMeansTestdata x -> createTestdata x
       Fib x -> maybe runBatch_fib benchFibWith x
+      Fac x -> benchFacWith x
       where
         runBatch_kmeans = runBenchmark info_kmeans $ createKMeansBatch t defaultKMeansConfig
         runBatch_fib    = runBenchmark info_fib    $ createFibBatch    t defaultFibConfig
@@ -235,4 +253,9 @@ parseArgs = \case
     width <- readMaybeInt s_width
     p <- readMaybeParallelism s_p
     return $ Fib $ pure (p, depth, width)
+  ("fac" : s_depth : s_width : s_p : _) -> do
+    depth <- readMaybeInt s_depth
+    width <- readMaybeInt s_width
+    p <- readMaybeParallelism s_p
+    return $ Fac (p, depth, width)
   _ -> Nothing
