@@ -134,7 +134,7 @@ benchFibWith params@(parallelism, depth, width) =
 benchFacWith :: FibParameters -> IO ()
 benchFacWith params@(parallelism, depth, width) =
   let
-    testData = replicate width depth
+    testData = replicate width (fromIntegral depth)
   in do
     printFibBenchmarkInfo params
     defaultMain $ pure $ bench name $ nf f testData
