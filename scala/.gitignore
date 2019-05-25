@@ -19,5 +19,4 @@ project/plugins/project/
 *.actual
 ssh.sh
 upload.sh
-batch.sh
 project
