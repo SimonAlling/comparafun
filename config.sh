@@ -20,5 +20,5 @@ KMEANS_K=200
 
 # For the factorial benchmark. Analogous to FIB parameters above.
 FAC_WIDTH=1000
-FAC_DEPTH=1000000
+FAC_DEPTH=5000
 
