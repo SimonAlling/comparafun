@@ -1,0 +1,13 @@
+stack exec -- comparafun fib 32 100 23 +RTS -H1G -A100M -N23 -RTS --output fib-parListChunk-23.html
+Detected 24 hardware threads
+Using 23 HECs
+depth = 32
+width = 100
+
+benchmarking fib_parListChunk
+time                 497.8 ms   (487.3 ms .. 518.2 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 501.3 ms   (497.1 ms .. 506.3 ms)
+std dev              5.341 ms   (2.401 ms .. 7.403 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
