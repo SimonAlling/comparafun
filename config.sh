@@ -10,8 +10,8 @@ REPETITIONS=9
 
 # Width is number of items to map fib over.
 # Depth is each item in the list.
-FIB_WIDTH=1000
-FIB_DEPTH=30
+FIB_WIDTH=100
+FIB_DEPTH=32
 
 # n is number of points.
 # k is number of desired clusters.
