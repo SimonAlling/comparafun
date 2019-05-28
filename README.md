@@ -1,2 +1,3 @@
 # comparafun
-Comparison of functional programming languages for parallel applications
+
+Code used in a master's thesis at Chalmers University of Technology.
