@@ -1,13 +1,13 @@
 stack exec -- comparafun fac 5000 1000 seq +RTS -H1G -A100M -N1 -RTS --output fac-par-1.html
-Detected 4 hardware threads
+Detected 24 hardware threads
 Using 1 HEC
 depth = 5000
 width = 1000
 
 benchmarking fac_seq
-time                 2.439 s    (2.412 s .. 2.470 s)
+time                 2.012 s    (1.995 s .. 2.037 s)
                      1.000 R²   (1.000 R² .. 1.000 R²)
-mean                 2.456 s    (2.447 s .. 2.470 s)
-std dev              12.88 ms   (3.874 ms .. 16.89 ms)
+mean                 2.047 s    (2.030 s .. 2.076 s)
+std dev              27.22 ms   (991.3 μs .. 33.52 ms)
 variance introduced by outliers: 19% (moderately inflated)
 

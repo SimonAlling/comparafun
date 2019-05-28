@@ -1,0 +1,75 @@
+Width: 1000
+Depth: 5000
+Repetitions: 9
+
+Threads: 1
+Median: 9171 ms
+
+Threads: 2
+Median: 5458 ms
+
+Threads: 3
+Median: 3518 ms
+
+Threads: 4
+Median: 2665 ms
+
+Threads: 5
+Median: 2170 ms
+
+Threads: 6
+Median: 1811 ms
+
+Threads: 7
+Median: 1556 ms
+
+Threads: 8
+Median: 1364 ms
+
+Threads: 9
+Median: 1243 ms
+
+Threads: 10
+Median: 1121 ms
+
+Threads: 11
+Median: 1018 ms
+
+Threads: 12
+Median: 946 ms
+
+Threads: 13
+Median: 940 ms
+
+Threads: 14
+Median: 920 ms
+
+Threads: 15
+Median: 854 ms
+
+Threads: 16
+Median: 817 ms
+
+Threads: 17
+Median: 816 ms
+
+Threads: 18
+Median: 771 ms
+
+Threads: 19
+Median: 744 ms
+
+Threads: 20
+Median: 723 ms
+
+Threads: 21
+Median: 704 ms
+
+Threads: 22
+Median: 685 ms
+
+Threads: 23
+Median: 668 ms
+
+Threads: 24
+Median: 650 ms
