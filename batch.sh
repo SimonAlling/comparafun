@@ -2,6 +2,13 @@
 
 . ./config.sh
 
+# If any of these is not on the PATH, the script stops:
+readonly EXECUTABLES=("stack" "erl" "sbt" "pmlc")
+
+for cmd in "${EXECUTABLES[@]}"; do
+	[[ $(type -P "$cmd") ]] || { echo "$cmd not found. Did you forget nix-shell?"; exit 1; }
+done
+
 echo "I'm about to run ALL benchmarks. This can take several hours."
 echo
 echo "I will use these parameters:"
