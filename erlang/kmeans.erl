@@ -50,7 +50,7 @@ add_pointsums(PointSums) ->
 %% At each step, we replace the centroid of each cluster by the
 %% average of the points assigned to it.
 
-recentre(Points, Clusters) -> do
+recenter(Points, Clusters) -> do
   , ClusterPointsums = cluster_pointsums(Points, Clusters)
   , [
       { Id, if N==0 -> Old; true -> divide_point(Sum, N) end }
@@ -64,7 +64,7 @@ recentre(Points, Clusters) -> do
 kmeans_seq(0, _, Clusters) ->
   Clusters;
 kmeans_seq(MaxIterations, Points, Clusters) -> do
-  , NewClusters = recentre(Points, Clusters)
+  , NewClusters = recenter(Points, Clusters)
   , if dummy -> dummy
     ; Clusters == NewClusters -> Clusters
     ; true -> kmeans_seq(MaxIterations-1, Points, NewClusters)
