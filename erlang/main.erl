@@ -2,6 +2,8 @@
 -export(
   [ fibBenchmark/1
   , fibBenchmark/3
+  , facBenchmark/1
+  , facBenchmark/3
   , kmeansBenchmark/1
   , kmeansBenchmark/3
   ]
@@ -22,6 +24,22 @@ fibBenchmark([W_str, D_str, Repetitions_str]) -> do
   , fibBenchmark(W, D, R)
   ;
 fibBenchmark(_) -> printUsage().
+
+facBenchmark(Width, Depth, Repetitions) -> do
+  , Xs = lists:duplicate(Width, Depth)
+  , Threads = erlang:system_info(schedulers)
+  , F_seq = fun() -> fac:factorials_seq(Xs) end
+  , F_par = fun() -> fac:factorials_par(Xs) end
+  , measureEither(F_seq, F_par, Repetitions, Threads)
+  , halt()
+  .
+facBenchmark([W_str, D_str, Repetitions_str]) -> do
+  , { W, _ } = string:to_integer(W_str)
+  , { D, _ } = string:to_integer(D_str)
+  , { R, _ } = string:to_integer(Repetitions_str)
+  , facBenchmark(W, D, R)
+  ;
+facBenchmark(_) -> printUsage().
 
 kmeansBenchmark(N, K, Repetitions) -> do
   , Filename = "kmeans-erlang.testdata"
