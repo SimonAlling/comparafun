@@ -21,6 +21,7 @@ stdenv.mkDerivation {
         criterion
       ]
     )))
+    gmp
     hasklig
     stack
 
