@@ -1,0 +1,13 @@
+stack exec -- comparafun fac 5000 1000 21 +RTS -H1G -A100M -N21 -RTS --output fac-par-21.html
+Detected 24 hardware threads
+Using 21 HECs
+depth = 5000
+width = 1000
+
+benchmarking fac_par
+time                 2.320 s    (2.250 s .. 2.380 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 2.321 s    (2.315 s .. 2.332 s)
+std dev              10.28 ms   (195.3 μs .. 12.67 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
