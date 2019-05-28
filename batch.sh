@@ -23,6 +23,7 @@ echo "Running Erlang benchmarks ..."
 cd erlang
 ./batch-fib.sh
 ./batch-kmeans.sh
+./batch-fac.sh
 cd -
 
 echo
@@ -36,7 +37,8 @@ cd -
 echo
 echo "Running Manticore benchmarks ..."
 cd manticore
-./batch.sh
+./batch-fib.sh
+./batch-fac.sh
 cd -
 
 echo
