@@ -4,11 +4,20 @@
 
 echo "I'm about to run ALL benchmarks. This can take several hours."
 echo
-echo "I will use a maximum of $MAX_THREADS threads."
-echo "To change this, please edit config.sh."
+echo "I will use these parameters:"
+echo "    Maximum number of threads: $MAX_THREADS"
+echo "    Repetitions: $REPETITIONS"
+echo "    Fibonacci width: $FIB_WIDTH"
+echo "    Fibonacci depth: $FIB_DEPTH"
+echo "    k-means n: $KMEANS_N"
+echo "    k-means k: $KMEANS_K"
+echo "    Factorial width: $FAC_WIDTH"
+echo "    Factorial depth: $FAC_DEPTH"
+echo ""
+echo "To change these parameters, please edit config.sh."
 echo 
 
-sleep 2
+sleep 5
 
 echo
 echo "Running Haskell benchmarks ..."
