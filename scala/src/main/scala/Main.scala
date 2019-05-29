@@ -106,6 +106,12 @@ extends App {
 
 object kmeansBenchmark
 extends Bench.OfflineReport {
+  override lazy val executor = SeparateJvmsExecutor(
+    new Executor.Warmer.Default,
+    Aggregator.min,
+    measurer)
+  override lazy val measurer = new Measurer.Default
+
   val n = Config.getParam(Config.REGEX_KMEANS_N)
   val k = Config.getParam(Config.REGEX_KMEANS_K)
   val seed = 3
@@ -115,10 +121,20 @@ extends Bench.OfflineReport {
   val vectorizedTestData = parsedTestData.map(_.toVector).toVector
   val unit = Gen.unit("dummy")
   val threads = Gen.range("threads")(2, maxThreads, 1)
-  measure method "kmeans_seq" in {
+  measure method "kmeans_seq" config (
+    exec.minWarmupRuns -> 1,
+    exec.maxWarmupRuns -> 1,
+    exec.benchRuns -> 2,
+    exec.independentSamples -> 2
+  ) in {
     using (unit) in { _ => runKMeans(vectorizedTestData, k, 1) }
   }
-  measure method "kmeans_par" in {
+  measure method "kmeans_par" config (
+    exec.minWarmupRuns -> 1,
+    exec.maxWarmupRuns -> 1,
+    exec.benchRuns -> 2,
+    exec.independentSamples -> 2
+  ) in {
     using (threads) in {
       t => {
         runKMeans(vectorizedTestData, k, t)
