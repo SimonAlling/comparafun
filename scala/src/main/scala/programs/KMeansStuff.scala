@@ -10,7 +10,7 @@ package object KMeansStuff {
     a.zip(b).map(subtract.tupled andThen square).sum
   }
   
-  val expectDivergent = 1
+  val expectDivergent = 100000
 
   def runKMeans(points: Vector[Point], k: Int, parallelism: Int): Vector[Vector[Point]] = {
     val initial =
