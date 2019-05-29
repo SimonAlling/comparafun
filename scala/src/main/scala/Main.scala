@@ -52,6 +52,7 @@ extends App {
   val n = args(0).toInt
   val k = args(1).toInt
   val seed = args(2).toInt
+  val parallelism = args(3).toInt
   val filename = Config.filename(n, k, seed)
   // Test data
   val testDataFile = filename(Config.EXT_TESTDATA)
@@ -64,8 +65,7 @@ extends App {
   val vectorizedExpected = parsedHaskell.map(_.map(_.toVector).toVector).toVector
   // Run
   val resultSeq = runKMeans(vectorizedTestData, k, 1)
-  val TODO_PARALLELISM = 2
-  val resultPar = runKMeans(vectorizedTestData, k, TODO_PARALLELISM)
+  val resultPar = runKMeans(vectorizedTestData, k, parallelism)
   val showSomeOf = (l: Int, showable: Any) => { val s = showable.toString; if (s.length > l) s.take(l) + "..." else s }
   val MAX_LENGTH = 1000
   val serialize = KMeansTools.serializeResult _
