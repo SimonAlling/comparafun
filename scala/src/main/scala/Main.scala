@@ -121,19 +121,22 @@ extends Bench.OfflineReport {
   val vectorizedTestData = parsedTestData.map(_.toVector).toVector
   val unit = Gen.unit("dummy")
   val threads = Gen.range("threads")(2, maxThreads, 1)
+  val WARMUP_RUNS = 2
+  val BENCH_RUNS = 5
+  val SAMPLES = 5
   measure method "kmeans_seq" config (
-    exec.minWarmupRuns -> 1,
-    exec.maxWarmupRuns -> 1,
-    exec.benchRuns -> 2,
-    exec.independentSamples -> 2
+    exec.minWarmupRuns -> WARMUP_RUNS,
+    exec.maxWarmupRuns -> WARMUP_RUNS,
+    exec.benchRuns -> BENCH_RUNS,
+    exec.independentSamples -> SAMPLES
   ) in {
     using (unit) in { _ => runKMeans(vectorizedTestData, k, 1) }
   }
   measure method "kmeans_par" config (
-    exec.minWarmupRuns -> 1,
-    exec.maxWarmupRuns -> 1,
-    exec.benchRuns -> 2,
-    exec.independentSamples -> 2
+    exec.minWarmupRuns -> WARMUP_RUNS,
+    exec.maxWarmupRuns -> WARMUP_RUNS,
+    exec.benchRuns -> BENCH_RUNS,
+    exec.independentSamples -> SAMPLES
   ) in {
     using (threads) in {
       t => {
