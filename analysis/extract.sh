@@ -1,4 +1,4 @@
-***REMOVED***
+#!/usr/bin/env bash
 
 # Run this file from an immediate subdirectory.
 

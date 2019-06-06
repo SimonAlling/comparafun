@@ -1,4 +1,4 @@
-***REMOVED***
+#!/usr/bin/env bash
 
 . ../config.sh
 

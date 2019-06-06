@@ -1,4 +1,4 @@
-***REMOVED***
+#!/usr/bin/env bash
 
 # Benchmarks will be run on 1, 2, ..., MAX_THREADS.
 # Value should generally not exceed number of hardware threads.
