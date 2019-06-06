@@ -35,5 +35,8 @@ stdenv.mkDerivation {
 
     # Erlang
     erlangR21
+
+    # C
+    gcc8
   ];
 }

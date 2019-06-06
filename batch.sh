@@ -58,5 +58,11 @@ cd manticore
 cd -
 
 echo
+echo "Running C benchmarks ..."
+cd c
+./batch-fib.sh
+cd -
+
+echo
 echo "Done."
 
