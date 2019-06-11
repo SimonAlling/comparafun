@@ -71,6 +71,12 @@ svg config = Element "svg" $ Attrs $ do
   []
   where size = show $ scalingFactor config * fromIntegral (chartSize config + 2 * margin config)
 
+-- css :: Node
+-- css = Element "style" noAttrs . pure . TextNode . concat $ map colorRule colors
+--   where
+--     colorRule :: Color -> String
+--     colorRule c = concat [ ".", show c, "{ fill: ", show c, "; }" ]
+
 chart :: RenderConfig -> [Node] -> Node
 chart config children = Element "g" attrs allChildren
   where
