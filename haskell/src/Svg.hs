@@ -28,7 +28,7 @@ instance Show Node where
   show (Element tagName attrs children) = concat [ "<", tagName, show attrs, ">", "\n", content, "</", tagName, ">" ]
     where content = indent 4 $ unlines $ map show children
 
-data Color = Red | Green | Blue | Orange | Magenta | Brown | Purple | Salmon
+data Color = Red | ForestGreen | Blue | Orange | Magenta | Brown | Purple | DodgerBlue
   deriving (Enum, Show)
 
 colors :: [Color]
@@ -70,12 +70,6 @@ svg config = Element "svg" $ Attrs $ do
   ("height", size)
   []
   where size = show $ scalingFactor config * fromIntegral (chartSize config + 2 * margin config)
-
--- css :: Node
--- css = Element "style" noAttrs . pure . TextNode . concat $ map colorRule colors
---   where
---     colorRule :: Color -> String
---     colorRule c = concat [ ".", show c, "{ fill: ", show c, "; }" ]
 
 chart :: RenderConfig -> [Node] -> Node
 chart config children = Element "g" attrs allChildren
